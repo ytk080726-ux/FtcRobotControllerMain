@@ -18,13 +18,11 @@ public class launcherB {
     }
     public void up()
     {
-        if (state) {
                 launcherB.setPower(0.3);
-        }
-        else {
-            launcherB.setPower(0);
-        }
-        state = !state;
+    }
+    public void kill()
+    {
+        launcherB.setPower(0);
     }
 
 }

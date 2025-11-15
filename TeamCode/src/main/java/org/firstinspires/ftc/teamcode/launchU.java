@@ -9,49 +9,29 @@ public class launchU {
     DcMotorEx launch;
     boolean launchHighState;
     boolean launchLowState;
+    double tps;
 
     public void init(HardwareMap hw) {
         launch = hw.get(DcMotorEx.class, "shooter");
         launch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        launch.setDirection(DcMotor.Direction.FORWARD);
-        //launchUState = true;v
+        launch.setDirection(DcMotorEx.Direction.FORWARD);
+        tps=((3350/60)*28);
+        launchHighState=false;
     }
     public void highLaunch()
     {
-        if (launchHighState) {
-            launch.setPower(0.3);
-        }
-        else {
-            launch.setPower(0);
-        }
-        //launchUState = !launchUState;
+        //launch.setTargetPosition((int) (28/(Math.PI*96)));
+        launch.setVelocity(tps);
     }
-
-    public void lowLaunch()
+    public void midLaunch()
+    {launch.setVelocity((3000/60)*28);}
+    public void sort()
     {
-        if (launchLowState) {
-            launch.setPower(0.1);
-        }
-        else {
-            launch.setPower(0);
-        }
-        //launchUState = !launchUState;
+        launch.setVelocity((1100/60)*28);
     }
 
-//    public void launchD() {
-//        launch.setPower(0);
-//    }
-//
-//    public void launchL() {
-//        launch.setPower(0.001);
-//    }
-//
-//    public void launchM() {
-//        launch.setPower(0.01);
-//    }
-//
-//
-//    public double speed() {
-//        return launch.getPower();
-//    }
+    public void kill()
+    {
+        launch.setVelocity(0);
+    }
 }

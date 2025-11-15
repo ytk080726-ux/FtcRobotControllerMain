@@ -17,6 +17,7 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
     launcherB launch = new launcherB();
     launchU launchUP = new launchU();
     pushing ballpush = new pushing();
+    sensor detect= new sensor();
 
     @Override
 
@@ -51,10 +52,12 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
         launch.init(hardwareMap);
         launchUP.init(hardwareMap);
         ballpush.init(hardwareMap);
+        detect.init(hardwareMap);
         telemetry.addData("imu", imu.getRobotYawPitchRollAngles());
+        detect.output(telemetry);
         double power = 0.8;
 
-
+        boolean state = false;
         waitForStart();
 
         if (isStopRequested()) return;
@@ -65,6 +68,8 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
+            detect.output(telemetry);
+            telemetry.addData("color", detect.getDetectedColor());
 
             // This button choice was made so that it is hard to hit on accident,
             // it can be freely changed based on preference.
@@ -91,72 +96,48 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             double backRightPower = -(rotY + rotX - rx) / 2;
 
             frontLeftMotor.setPower(frontLeftPower);
+
             backLeftMotor.setPower(backLeftPower);
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
+            telemetry.addData("b on", state);
+            telemetry.addData("Distance", detect.distance());
+
             telemetry.addData("imu", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
 //            telemetry.addData("motor speed",launchUP.speed());
             if (gamepad1.aWasPressed()) {
                 take.type();
             }
-            if (gamepad1.bWasPressed()) {
+            if (detect.distance() > 78 && ballpush.getpos() < 0.2) {
                 launch.up();
-            }
-//            if (gamepad1.right_bumper) {
-//                launchUP.launchD();
-//            }
-//            if (gamepad1.left_bumper) {
-//                launchUP.launchL();
-//            }
-//            if (gamepad1.right_trigger > 0.1) {
-//                launchUP.launchM();
+            } else
+                launch.kill();
 
-            if (gamepad1.left_trigger > .3) {
-                telemetry.addData("left_trigger pressed amount",gamepad1.left_trigger);
-                //launchUP.launch.setPower(0.2);
-                launchUP.launch.setPower(0.1);
-                //launchUP.highLaunch();
-                telemetry.addData("flywheel power" , launchUP.launch.getPower());
-                //shooter.setPower(0.2);
-//                launchUP.launchH();
-            }
-//            else if (gamepad1.right_trigger > .3) {
-//                telemetry.addData("right_trigger pressed amount",gamepad1.right_trigger );
-//                //launchUP.launch.setPower(0.2);
-//                launchUP.launch.setPower(0.1);
-//                //launchUP.lowLaunch();
-//                telemetry.addData("flywheel power" , launchUP.launch.getPower());
-//                //shooter.setPower(0.2);
-////                launchUP.launchH();
-//            }
-            else {
-                telemetry.addData("right_trigger pressed amount",gamepad1.right_trigger );
-                //launchUP.launchLowState = false;
-                //launchUP.launch.setPower(0.0);
-                launchUP.launch.setPower(gamepad1.right_trigger * 0.15);
-                telemetry.addData("flywheel power" , launchUP.launch.getPower());
-            }
-
-            ballpush.bp(gamepad1.y);
+            ballpush.set(gamepad1.y);
             if (gamepad1.xWasPressed()) {
                 stop.position();
             }
+            if (gamepad1.right_trigger > 0.2) {
+                launchUP.highLaunch();
+                telemetry.addData("power", launchUP.launch.getPower());
+            }
+            else
+            {
+                launchUP.kill();
+            }
+            if(gamepad1.left_trigger>0.2)
+            {
+                launchUP.midLaunch();
+            }
+            else
+            {
+                launchUP.kill();
+            }
+            if(gamepad1.left_bumper)
+                launchUP.sort();
+            else
+                launchUP.kill();
         }
-        }
-//        if (gamepad1.left_trigger > .0) {
-//            telemetry.addData("left_trigger pressed amount",gamepad1.left_trigger );
-//            launchUP.upTwo();
-//            //shooter.setPower(0.2);
-////                launchUP.launchH();
-//        }
-//        else {
-//            telemetry.addData("left_trigger pressed amount",gamepad1.left_trigger );
-//            launchUP.launchUState = false;
-//        }
-//            ballpush.bp(gamepad1.y);
-//            if (gamepad1.xWasPressed()) {
-//                stop.position();
-//            }
-//        }
+    }
     }
 

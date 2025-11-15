@@ -9,21 +9,30 @@ import com.qualcomm.robotcore.hardware.configuration.ServoFlavor;
 
 public class pushing {
 
-    private CRServo R;
-    private CRServo L;
+    private Servo L;
+    double pos;
     boolean state;
     public void init(HardwareMap hw)
     {
-        R=hw.get(CRServo.class,"servoflyAR");
-        R.setPower(0);
+        //R=hw.get(CRServo.class,"servoflyAR");
+        L=hw.get(Servo.class,"servoflyAR");
+        //R.setPower(0);
+        pos=0;
+        L.setPosition(pos);
     }
-    public void bp(boolean state)  {
+
+    public void set(boolean state)
+    {
         if(state){
-        R.setPower(-0.155);
+            L.setPosition(pos+0.7);
         }
         else
         {
-            R.setPower(0);
-        }
+            L.setPosition(pos);
+        }    }
+
+
+    public double getpos() {
+        return L.getPosition();
     }
 }
