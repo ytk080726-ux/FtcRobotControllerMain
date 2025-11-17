@@ -137,6 +137,12 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
                 launchUP.sort();
             else
                 launchUP.kill();
+            if(gamepad1.right_bumper)
+            {
+                launchUP.lowLaunch();
+            }
+            else
+                launchUP.kill();
         }
     }
     }

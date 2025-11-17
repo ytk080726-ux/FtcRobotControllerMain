@@ -24,7 +24,7 @@ public class pushing {
     public void set(boolean state)
     {
         if(state){
-            L.setPosition(pos+0.7);
+            L.setPosition(pos+0.6);
         }
         else
         {
@@ -33,6 +33,7 @@ public class pushing {
 
 
     public double getpos() {
+
         return L.getPosition();
     }
 }

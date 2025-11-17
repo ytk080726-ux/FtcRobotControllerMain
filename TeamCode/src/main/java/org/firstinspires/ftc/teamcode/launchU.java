@@ -25,6 +25,10 @@ public class launchU {
     }
     public void midLaunch()
     {launch.setVelocity((3000/60)*28);}
+    public void lowLaunch()
+    {
+        launch.setVelocity((2800/60)*28);
+    }
     public void sort()
     {
         launch.setVelocity((1100/60)*28);
