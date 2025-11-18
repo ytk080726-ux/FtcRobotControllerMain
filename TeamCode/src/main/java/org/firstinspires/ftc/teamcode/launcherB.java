@@ -14,6 +14,7 @@ public class launcherB {
         launcherB = hw.get(DcMotor.class,"transfer");
         launcherB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         launcherB.setDirection(DcMotor.Direction.FORWARD);
+        launcherB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         state=true;
     }
     public void up()

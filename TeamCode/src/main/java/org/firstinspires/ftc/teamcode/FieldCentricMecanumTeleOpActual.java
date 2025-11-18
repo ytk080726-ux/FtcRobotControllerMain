@@ -69,7 +69,7 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
             detect.output(telemetry);
-            telemetry.addData("color", detect.getDetectedColor());
+            telemetry.addData("color", detect.  getDetectedColor());
 
             // This button choice was made so that it is hard to hit on accident,
             // it can be freely changed based on preference.
@@ -121,28 +121,16 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
                 launchUP.highLaunch();
                 telemetry.addData("power", launchUP.launch.getPower());
             }
-            else
-            {
-                launchUP.kill();
-            }
             if(gamepad1.left_trigger>0.2)
             {
                 launchUP.midLaunch();
             }
-            else
-            {
-                launchUP.kill();
-            }
             if(gamepad1.left_bumper)
                 launchUP.sort();
-            else
-                launchUP.kill();
             if(gamepad1.right_bumper)
             {
                 launchUP.lowLaunch();
             }
-            else
-                launchUP.kill();
         }
     }
     }

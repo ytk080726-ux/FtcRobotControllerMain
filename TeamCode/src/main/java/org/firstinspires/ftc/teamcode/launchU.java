@@ -15,7 +15,7 @@ public class launchU {
         launch = hw.get(DcMotorEx.class, "shooter");
         launch.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         launch.setDirection(DcMotorEx.Direction.FORWARD);
-        tps=((3350/60)*28);
+        tps=((3400/60)*28);
         launchHighState=false;
     }
     public void highLaunch()
