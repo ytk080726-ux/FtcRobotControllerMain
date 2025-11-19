@@ -117,20 +117,14 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             if (gamepad1.xWasPressed()) {
                 stop.position();
             }
-            if (gamepad1.right_trigger > 0.2) {
-                launchUP.highLaunch();
-                telemetry.addData("power", launchUP.launch.getPower());
-            }
-            if(gamepad1.left_trigger>0.2)
+            if(gamepad1.rightBumperWasPressed())
             {
-                launchUP.midLaunch();
+                launchUP.launch();
             }
-            if(gamepad1.left_bumper)
+            if (gamepad1.left_bumper)
                 launchUP.sort();
-            if(gamepad1.right_bumper)
-            {
-                launchUP.lowLaunch();
-            }
+            else
+                launchUP.kill();
         }
     }
     }
