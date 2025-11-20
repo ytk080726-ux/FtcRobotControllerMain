@@ -17,14 +17,14 @@ public class pushing {
         //R=hw.get(CRServo.class,"servoflyAR");
         L=hw.get(Servo.class,"servoflyAR");
         //R.setPower(0);
-        pos=0;
+        pos=0.1;
         L.setPosition(pos);
     }
 
     public void set(boolean state)
     {
         if(state){
-            L.setPosition(pos+0.45);
+            L.setPosition(pos+0.5);
         }
         else
         {

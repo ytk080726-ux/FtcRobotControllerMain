@@ -108,23 +108,29 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             if (gamepad1.aWasPressed()) {
                 take.type();
             }
-            if (detect.distance() > 78 && ballpush.getpos() < 0.2) {
-                launch.up();
-            } else
-                launch.kill();
 
+            // Lower ball launcher
+            if (detect.distance() > 78 && ballpush.getpos() < 0.2) {
+                launch.setPower(0.3); // Start
+            }
+            else {
+                launch.setPower(0); // Stop
+            }
+
+            // Sets the door to launch artifact depending of if Y pressed.
             ballpush.set(gamepad1.y);
+
+            // Open/Close the gate for artifacts
             if (gamepad1.xWasPressed()) {
                 stop.position();
             }
-            if(gamepad1.rightBumperWasPressed())
+            if(gamepad1.left_bumper)
             {
-                launchUP.launch();
-            }
-            if (gamepad1.left_bumper)
                 launchUP.sort();
-            else
-                launchUP.kill();
+            }
+            if (gamepad1.rightBumperWasPressed())
+                launchUP.launch();
+            telemetry.addData("state", launchUP.state());
         }
     }
     }

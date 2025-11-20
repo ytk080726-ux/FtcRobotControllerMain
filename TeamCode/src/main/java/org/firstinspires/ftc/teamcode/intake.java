@@ -11,14 +11,15 @@ public class intake {
     public void init(HardwareMap hw) {
         intake=hw.get(DcMotor.class,"intake");
         intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intake.setDirection(DcMotorSimple.Direction.REVERSE);
+        intake.setDirection(DcMotorSimple.Direction.REVERSE );
         state=true;
     }
 
+    // Toggle between on and off mode when A button is pressed
     public void type() {
         if (state)
         {
-                intake.setPower(0.4);
+            intake.setPower(0.4);
         }
         else
         {

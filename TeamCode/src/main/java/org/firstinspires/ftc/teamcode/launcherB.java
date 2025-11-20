@@ -17,13 +17,11 @@ public class launcherB {
         launcherB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         state=true;
     }
-    public void up()
-    {
-                launcherB.setPower(0.3);
-    }
-    public void kill()
-    {
-        launcherB.setPower(0);
+
+    // One method to set the power (for redundancy).
+    // Prereqs: A double between 0-1
+    public void setPower(double newPower) {
+        launcherB.setPower(newPower);
     }
 
 }
