@@ -90,10 +90,10 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             // This ensures all the powers maintain the same ratio,
             // but only if at least one is out of the range [-1, 1]
             double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-            double frontLeftPower = (rotY + rotX + rx) / 2;
-            double backLeftPower = (rotY - rotX + rx) / 2;
-            double frontRightPower = (rotY - rotX - rx) / 2;
-            double backRightPower = -(rotY + rotX - rx) / 2;
+            double frontLeftPower = (rotY + rotX + rx) / 1.5;
+            double backLeftPower = (rotY - rotX + rx) / 1.5;
+            double frontRightPower = (rotY - rotX - rx) / 1.5;
+            double backRightPower = -(rotY + rotX - rx) / 1.5;
 
             frontLeftMotor.setPower(frontLeftPower);
 
@@ -118,6 +118,7 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             }
 
             // Sets the door to launch artifact depending of if Y pressed.
+            // TODO: Make it toggle
             ballpush.set(gamepad1.y);
 
             // Open/Close the gate for artifacts
