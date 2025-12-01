@@ -10,7 +10,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.11.0-alpha01' // Change this line
+        classpath 'com.android.tools.build:gradle:8.11.2' // Change this line
         // Other dependencies
     }
 }
