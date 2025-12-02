@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.vision.VisionPortal;
 
+@Autonomous(name = "Back Red Auto")
 public class realAuto extends LinearOpMode {
     DcMotor driveLeft;
     DcMotor driveRight;
@@ -22,15 +24,11 @@ public class realAuto extends LinearOpMode {
     DistanceSensor distance1;
     BNO055IMU imu;
 
+    int forward, turn, mode, maxDrivePower, strafe;
     long duration;
-    int forward;
-    int turn;
     VisionPortal myVisionPortal;
     boolean isShooting;
     double shootPower;
-    int mode;
-    int maxDrivePower;
-    int strafe;
 
     // Describe this function...
     public void inititalSetup(){
