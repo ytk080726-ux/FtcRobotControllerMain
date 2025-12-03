@@ -67,18 +67,18 @@ public class realAuto extends LinearOpMode {
         processInputsAndSleep(800);
         turn = -1;
         processInputsAndSleep(220);
-        sleep(50000);
+        sleep(50);
     }
 
     // Describe this function...
     public void processInputsAndSleep(long duration){
         // This helper function makes the code a bit cleaner
         processDriveInputs();
-        sleep(duration);
-        // Stop all movement after sleep
         forward = 0;
         turn = 0;
         strafe = 0;
+        sleep(duration);
+        // Stop all movement after sleep
         //processDriveInputs();
     }
 
@@ -94,7 +94,7 @@ public class realAuto extends LinearOpMode {
         backRightMotor.setPower(0.5);
         frontRightMotor.setPower(0.5);
 
-        sleep(50000);
+        sleep(50);
     }
 
     @Override
