@@ -39,10 +39,10 @@ public class launchU {
     public void launch()
     {
         if(num==0) {
-            launch.setVelocity(((3567/ 60) * 28)); // State 3
+            launch.setVelocity(((3460/ 60) * 28)); // State 3
             num = 3;
         } else if (num == 3) {
-            launch.setVelocity(((2867/60)*28)); // State 2
+            launch.setVelocity(((2767/60)*28)); // State 2
             num=2;
         } else if (num==2) {
             launch.setVelocity(((2567/60)*28)); // State 1

@@ -18,6 +18,7 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
     launchU launchUP = new launchU();
     pushing ballpush = new pushing();
     sensor detect= new sensor();
+    //camera cam= new camera();
 
     @Override
 
@@ -55,6 +56,7 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
         detect.init(hardwareMap);
         telemetry.addData("imu", imu.getRobotYawPitchRollAngles());
         detect.output(telemetry);
+        //cam.init(hardwareMap,telemetry);
         double power = 0.8;
 
         boolean state = false;
@@ -111,7 +113,7 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
 
             // Lower ball launcher
             if (detect.distance() > 78 && ballpush.getpos() < 0.2) {
-                launch.setPower(0.3); // Start
+                launch.setPower((3300/ 60) * 28); // Start
             }
             else {
                 launch.setPower(0); // Stop
@@ -122,9 +124,9 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             ballpush.set(gamepad1.y);
 
             // Open/Close the gate for artifacts
-            if (gamepad1.xWasPressed()) {
-                stop.position();
-            }
+            //if (gamepad1.xWasPressed()) {
+            //    stop.position();
+            //}
             if(gamepad1.left_bumper)
             {
                 launchUP.sort();
@@ -132,6 +134,10 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             if (gamepad1.rightBumperWasPressed())
                 launchUP.launch();
             telemetry.addData("state", launchUP.state());
+            //if(gamepad1.dpadUpWasPressed())
+            //{
+            //    cam.loop(telemetry);
+            //}
         }
     }
     }

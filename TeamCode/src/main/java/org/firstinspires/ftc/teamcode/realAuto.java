@@ -14,10 +14,10 @@ import org.firstinspires.ftc.vision.VisionPortal;
 
 @Autonomous(name = "Back Red Auto")
 public class realAuto extends LinearOpMode {
-    DcMotorEx backRightMotor;
-    DcMotorEx frontRightMotor;
-    DcMotorEx frontLeftMotor;
-    DcMotorEx backLeftMotor;
+    DcMotor backRightMotor;
+    DcMotor frontRightMotor;
+    DcMotor frontLeftMotor;
+    DcMotor backLeftMotor;
     //DcMotor shootwheel;
     //Servo artifactstopper;
 //    ColorSensor color1;
@@ -95,22 +95,16 @@ public class realAuto extends LinearOpMode {
         backRightMotor.setPower(0.5);
         frontRightMotor.setPower(0.5);
         sleep(50);
-
-        backLeftMotor.setPower(-0.5);
-        frontLeftMotor.setPower(-0.5);
-        backRightMotor.setPower(0.5);
-        frontRightMotor.setPower(0.5);
-        sleep(50);
     }
 
     @Override
   public void runOpMode() {
        // shootwheel = hardwareMap.get(DcMotor.class, "shootwheel");
-        DcMotorEx backLeftMotor = hardwareMap.get(DcMotorEx.class, "backLeftMotor");
-        DcMotorEx backRightMotor = hardwareMap.get(DcMotorEx.class, "backRightMotor");
+         backLeftMotor = hardwareMap.get(DcMotor.class, "backLeftMotor");
+         backRightMotor = hardwareMap.get(DcMotor.class, "backRightMotor");
 
-        DcMotorEx frontLeftMotor = hardwareMap.get(DcMotorEx.class, "frontLeftMotor");
-        DcMotorEx frontRightMotor = hardwareMap.get(DcMotorEx.class, "frontRightMotor");
+         frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeftMotor");
+         frontRightMotor = hardwareMap.get(DcMotor.class, "frontRightMotor");
         //artifactstopper = hardwareMap.get(Servo.class, "artifactstopper");
         //color1 = hardwareMap.get(ColorSensor.class, "color1");
         //distance1 = hardwareMap.get(DistanceSensor.class, "distance1");
