@@ -19,7 +19,7 @@ public class intake {
     public void type() {
         if (state)
         {
-            intake.setPower(0.4);
+            intake.setPower(0.8);
         }
         else
         {

@@ -21,6 +21,15 @@ public class camera extends OpMode  {
     public void loop() {
         cam.update();
         AprilTagDetection id20=cam.getTagBySpecificId(20);
+        AprilTagDetection id21=cam.getTagBySpecificId(21);
+        AprilTagDetection id22=cam.getTagBySpecificId(22);
+        AprilTagDetection id23=cam.getTagBySpecificId(23);
+        AprilTagDetection id24=cam.getTagBySpecificId(24);
         cam.displayDetectionTelemetry(id20);
+        cam.displayDetectionTelemetry(id21);
+        cam.displayDetectionTelemetry(id22);
+        cam.displayDetectionTelemetry(id23);
+        cam.displayDetectionTelemetry(id24);
+        cam.toString();
     }
 }

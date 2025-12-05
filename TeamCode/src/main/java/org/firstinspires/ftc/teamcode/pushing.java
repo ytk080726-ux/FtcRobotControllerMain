@@ -17,7 +17,7 @@ public class pushing {
         //R=hw.get(CRServo.class,"servoflyAR");
         L=hw.get(Servo.class,"servoflyAR");
         //R.setPower(0);
-        pos=0.08;
+        pos=0.37;
         L.setPosition(pos);
     }
 
@@ -30,8 +30,16 @@ public class pushing {
         {
             L.setPosition(pos);
         }    }
-
-
+    public void push(boolean state)
+    {
+        if(state){
+            L.setPosition(0);
+        }
+        else
+        {
+            L.setPosition(pos);
+        }
+    }
     public double getpos() {
 
         return L.getPosition();

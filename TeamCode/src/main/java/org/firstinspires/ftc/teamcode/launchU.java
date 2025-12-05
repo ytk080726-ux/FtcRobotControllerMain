@@ -27,7 +27,7 @@ public class launchU {
     public void sort()
     {
         if(num1==0) {
-            launch.setVelocity((850 / 60) * 28);
+            launch.setVelocity((820  / 60) * 28);
             num1=1;
         }
         else {
@@ -42,7 +42,7 @@ public class launchU {
             launch.setVelocity(((3460/ 60) * 28)); // State 3
             num = 3;
         } else if (num == 3) {
-            launch.setVelocity(((2767/60)*28)); // State 2
+            launch.setVelocity(((2625/60)*28)); // State 2
             num=2;
         } else if (num==2) {
             launch.setVelocity(((2567/60)*28)); // State 1
