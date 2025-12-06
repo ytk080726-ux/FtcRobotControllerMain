@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 @TeleOp(name = "main")
 
@@ -18,7 +19,7 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
     launchU launchUP = new launchU();
     pushing ballpush = new pushing();
     sensor detect= new sensor();
-    //camera cam= new camera();
+    webCam cam= new webCam();
 
     @Override
 
@@ -56,6 +57,7 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
         detect.init(hardwareMap);
         telemetry.addData("imu", imu.getRobotYawPitchRollAngles());
         detect.output(telemetry);
+        cam.init(hardwareMap,telemetry);
         //cam.init(hardwareMap,telemetry);
         double power = 0.8;
 
@@ -65,8 +67,8 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
+            cam.update();
             telemetry.update();
-            telemetry.addData("imu", imu.getRobotYawPitchRollAngles());
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
@@ -76,9 +78,9 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             // This button choice was made so that it is hard to hit on accident,
             // it can be freely changed based on preference.
             // The equivalent button is start on Xbox-style controllers.
-            if (gamepad1.options) {
-                imu.resetYaw();
-            }
+//            if (gamepad1.options) {
+//                imu.resetYaw();
+//            }
 
             double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
@@ -112,7 +114,7 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             }
 
             // Lower ball launcher
-            if (detect.distance() > 78 && ballpush.getpos() < 0.2) {
+            if (detect.distance() > 78 && ballpush.getpos() < 0.5) {
                 launch.setPower((3300/ 60) * 28); // Start
             }
             else {
@@ -138,7 +140,38 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             //{
             //    cam.loop(telemetry);
             //}
+            AprilTagDetection id20=cam.getTagBySpecificId(20);
+            AprilTagDetection id24=cam.getTagBySpecificId(24);
+            cam.displayDetectionTelemetry(id20);
+            cam.displayDetectionTelemetry(id24);
+            if(gamepad1.dpad_left)
+            {
+                if(cam.pos((id20))<700)
+                {
+                    if(cam.pos(id20)>320) {
+                        frontLeftMotor.setPower(0.2);
+                        backLeftMotor.setPower(0.2);
+                        frontRightMotor.setPower(-0.2);
+                        backRightMotor.setPower(0.2);
+                    }
+                    else
+                    {
+                        frontLeftMotor.setPower(-0.2);
+                        backLeftMotor.setPower(-0.2);
+                        frontRightMotor.setPower(0.2);
+                        backRightMotor.setPower(-0.2);
+                    }
+                }
+                while(!(cam.pos(id20)<400&&cam.pos(id20)>200))
+                {
+                    cam.update();
+                    cam.displayDetectionTelemetry(id20);
+                    telemetry.update();
+                }
+                telemetry.addData("contgrat","success");
+            }
         }
+        telemetry.update();
     }
     }
 

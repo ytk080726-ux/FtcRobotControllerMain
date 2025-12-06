@@ -30,6 +30,5 @@ public class camera extends OpMode  {
         cam.displayDetectionTelemetry(id22);
         cam.displayDetectionTelemetry(id23);
         cam.displayDetectionTelemetry(id24);
-        cam.toString();
     }
 }

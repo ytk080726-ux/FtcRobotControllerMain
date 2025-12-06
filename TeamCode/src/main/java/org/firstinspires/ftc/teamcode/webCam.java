@@ -62,6 +62,14 @@ public class webCam {
         }
 
     }
+    public int pos(AprilTagDetection detectedId)
+    {
+        if(detectedId!=null)
+            return (int)detectedId.center.x;
+        else
+            return 10000;
+
+    }
     public AprilTagDetection getTagBySpecificId(int id) {
         for (AprilTagDetection detection : detectedTags) {
             if (detection.id == id) {
