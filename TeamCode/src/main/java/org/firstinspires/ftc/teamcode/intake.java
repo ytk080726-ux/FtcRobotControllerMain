@@ -34,4 +34,8 @@ public class intake {
         else
             intake.setDirection(DcMotorSimple.Direction.FORWARD);
     }
+    public void auto()
+    {
+        intake.setPower(0.8);
+    }
 }

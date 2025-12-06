@@ -21,6 +21,11 @@ public class BackColorAuto extends LinearOpMode {
     long duration;
     boolean isShooting;
     double shootPower, forward;
+    pushing ballpush;
+    sensor detect;
+    launcherB launch;
+    launchU launchu;
+    intake in;
 
     private VisionPortal visionPortal;
     private AprilTagProcessor AprilTagProcessor;
@@ -59,6 +64,8 @@ public class BackColorAuto extends LinearOpMode {
         turn = 0;
         strafe = 0;
         processDriveInputs();
+
+
     }
 
     public void processDriveInputs(){
@@ -66,13 +73,64 @@ public class BackColorAuto extends LinearOpMode {
         forward = forward * 0.5;
         strafe = strafe * maxDrivePower;
 
+        ballpush.set(false);
+        if (detect.distance() > 78 && ballpush.getpos() < 0.5) {
+            launch.setPower((3300/ 60) * 28); // Start
+        }
+        else {
+            launch.setPower(0); // Stop
+        }
+
+        in.auto();
+        sleep(100);
+        launchu.auto();
+        sleep(670);
+        launch.setPower(0);
+        ballpush.set(true);
+        sleep(1000);
+        launch.setPower((3670/ 60) * 28);
+        ballpush.set(false);
+        sleep(200);
+        launch.setPower(0);
+        ballpush.set(true);
+        sleep(1000);
+        launch.setPower((3670/ 60) * 28);
+        ballpush.set(false);
+        sleep(1000);
+        launch.setPower(0);
+        ballpush.set(true);
+        sleep(1000);
+        launch.setPower((3670/ 60) * 28);
+        ballpush.set(false);
+        sleep(1000);
+        launch.setPower(0);
+        ballpush.set(true);
+        sleep(1000);
+        launch.setPower((3670/ 60) * 28);
+        ballpush.set(false);
+        sleep(1000);
+        launch.setPower(0);
+        ballpush.set(true);
+        sleep(1000);
+        launch.setPower((3670/ 60) * 28);
+        ballpush.set(false);
+        sleep(200);
+
+        forward = forward * 0.7;
+
         backLeftMotor.setPower(forward);
         frontLeftMotor.setPower(forward);
         backRightMotor.setPower(forward);
         frontRightMotor.setPower(forward);
 
+        sleep(100);
+
         forward = 0;
-        sleep(300);
+        backLeftMotor.setPower(forward);
+        frontLeftMotor.setPower(forward);
+        backRightMotor.setPower(forward);
+        frontRightMotor.setPower(forward);
+        sleep(100);
     }
 
 //    public void displayVisionPortalData(){

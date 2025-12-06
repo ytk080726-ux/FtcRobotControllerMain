@@ -144,32 +144,32 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             AprilTagDetection id24=cam.getTagBySpecificId(24);
             cam.displayDetectionTelemetry(id20);
             cam.displayDetectionTelemetry(id24);
-            if(gamepad1.dpad_left)
-            {
-                if(cam.pos((id20))<700)
-                {
-                    if(cam.pos(id20)>320) {
-                        frontLeftMotor.setPower(0.2);
-                        backLeftMotor.setPower(0.2);
-                        frontRightMotor.setPower(-0.2);
-                        backRightMotor.setPower(0.2);
-                    }
-                    else
-                    {
-                        frontLeftMotor.setPower(-0.2);
-                        backLeftMotor.setPower(-0.2);
-                        frontRightMotor.setPower(0.2);
-                        backRightMotor.setPower(-0.2);
-                    }
-                }
-                while(!(cam.pos(id20)<400&&cam.pos(id20)>200))
-                {
-                    cam.update();
-                    cam.displayDetectionTelemetry(id20);
-                    telemetry.update();
-                }
-                telemetry.addData("contgrat","success");
-            }
+//            if(gamepad1.dpad_left)
+//            {
+//                if(cam.pos((id20))<700)
+//                {
+//                    if(cam.pos(id20)>320) {
+//                        frontLeftMotor.setPower(0.2);
+//                        backLeftMotor.setPower(0.2);
+//                        frontRightMotor.setPower(-0.2);
+//                        backRightMotor.setPower(0.2);
+//                    }
+//                    else
+//                    {
+//                        frontLeftMotor.setPower(-0.2);
+//                        backLeftMotor.setPower(-0.2);
+//                        frontRightMotor.setPower(0.2);
+//                        backRightMotor.setPower(-0.2);
+//                    }
+//                }
+//                while(!(cam.pos(id20)<400&&cam.pos(id20)>200))
+//                {
+//                    cam.update();
+//                    cam.displayDetectionTelemetry(id20);
+//                    telemetry.update();
+//                }
+//                telemetry.addData("contgrat","success");
+//            }
         }
         telemetry.update();
     }

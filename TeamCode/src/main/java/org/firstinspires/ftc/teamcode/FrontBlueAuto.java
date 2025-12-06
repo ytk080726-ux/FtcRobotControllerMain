@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-@Autonomous(name = "Front Red Auto")
-public class FrontRedAuto extends LinearOpMode {
+@Autonomous(name = "Front Blue Auto")
+public class FrontBlueAuto extends LinearOpMode {
     DcMotor backRightMotor;
     DcMotor frontRightMotor;
     DcMotor frontLeftMotor;
@@ -20,14 +20,13 @@ public class FrontRedAuto extends LinearOpMode {
     long duration;
     boolean isShooting;
     double shootPower, forward;
-
-    private VisionPortal visionPortal;
-    private AprilTagProcessor AprilTagProcessor;
     pushing ballpush;
-    sensor detect;
+            sensor detect;
     launcherB launch;
     launchU launchu;
     intake in;
+    private VisionPortal visionPortal;
+    private AprilTagProcessor AprilTagProcessor;
 
     public void inititalSetup(){
         frontRightMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -35,8 +34,6 @@ public class FrontRedAuto extends LinearOpMode {
 
         frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotor.Direction.FORWARD);
-
-        isShooting = false;
         ballpush= new pushing();
         launchu=new launchU();
         in = new intake();
@@ -87,10 +84,11 @@ public class FrontRedAuto extends LinearOpMode {
         else {
             launch.setPower(0); // Stop
         }
-        backLeftMotor.setPower(forward);
-        frontLeftMotor.setPower(forward);
-        backRightMotor.setPower(-forward);
-        frontRightMotor.setPower(-forward);
+
+        backLeftMotor.setPower(-forward);
+        frontLeftMotor.setPower(-forward);
+        backRightMotor.setPower(forward);
+        frontRightMotor.setPower(forward);
         sleep(300);
 
         backLeftMotor.setPower(-forward);
@@ -98,12 +96,12 @@ public class FrontRedAuto extends LinearOpMode {
         backRightMotor.setPower(-forward);
         frontRightMotor.setPower(-forward);
         sleep(1000);
+
         forward = 0;
         backLeftMotor.setPower(-forward);
         frontLeftMotor.setPower(-forward);
         backRightMotor.setPower(-forward);
         frontRightMotor.setPower(-forward);
-        ballpush.set(false);
         in.auto();
         sleep(100);
         launchu.auto();
@@ -111,33 +109,34 @@ public class FrontRedAuto extends LinearOpMode {
         launch.setPower(0);
         ballpush.set(true);
         sleep(1000);
-        launch.setPower((2800/ 60) * 28);
+        launch.setPower((3000/ 60) * 28);
         ballpush.set(false);
         sleep(200);
         launch.setPower(0);
         ballpush.set(true);
         sleep(1000);
-        launch.setPower((2800/ 60) * 28);
+        launch.setPower((3000/ 60) * 28);
         ballpush.set(false);
         sleep(1000);
         launch.setPower(0);
         ballpush.set(true);
         sleep(1000);
-        launch.setPower((2800/ 60) * 28);
+        launch.setPower((3000/ 60) * 28);
         ballpush.set(false);
         sleep(1000);
         launch.setPower(0);
         ballpush.set(true);
         sleep(1000);
-        launch.setPower((2800/ 60) * 28);
+        launch.setPower((3000/ 60) * 28);
         ballpush.set(false);
         sleep(1000);
         launch.setPower(0);
         ballpush.set(true);
         sleep(1000);
-        launch.setPower((2800/ 60) * 28);
+        launch.setPower((3000/ 60) * 28);
         ballpush.set(false);
         sleep(200);
+
     }
 
 //    public void displayVisionPortalData(){

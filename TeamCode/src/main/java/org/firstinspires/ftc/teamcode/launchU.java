@@ -59,4 +59,8 @@ public class launchU {
             return 4;
      return num;
     }
+    public void auto()
+    {
+        launch.setVelocity(((2567/60)*28)); // State 1
+    }
 }
