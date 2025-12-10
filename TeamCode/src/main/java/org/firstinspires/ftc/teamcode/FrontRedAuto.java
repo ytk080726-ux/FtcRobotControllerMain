@@ -82,7 +82,7 @@ public class FrontRedAuto extends LinearOpMode {
         strafe = strafe * maxDrivePower;
         ballpush.set(false);
         if (detect.distance() > 78 && ballpush.getpos() < 0.5) {
-            launch.setPower((3300/ 60) * 28); // Start
+            launch.setPower((2800/ 60) * 28); // Start
         }
         else {
             launch.setPower(0); // Stop
@@ -117,27 +117,38 @@ public class FrontRedAuto extends LinearOpMode {
         launch.setPower(0);
         ballpush.set(true);
         sleep(1000);
-        launch.setPower((2800/ 60) * 28);
+        launch.setPower((2600/ 60) * 28);
         ballpush.set(false);
         sleep(1000);
         launch.setPower(0);
         ballpush.set(true);
         sleep(1000);
-        launch.setPower((2800/ 60) * 28);
+        launch.setPower((2600/ 60) * 28);
         ballpush.set(false);
         sleep(1000);
         launch.setPower(0);
         ballpush.set(true);
         sleep(1000);
-        launch.setPower((2800/ 60) * 28);
+        launch.setPower((2600/ 60) * 28);
         ballpush.set(false);
         sleep(1000);
         launch.setPower(0);
         ballpush.set(true);
         sleep(1000);
-        launch.setPower((2800/ 60) * 28);
+        launch.setPower((2600/ 60) * 28);
         ballpush.set(false);
         sleep(200);
+//        forward=0.3;
+//        backLeftMotor.setPower(forward);
+//        frontLeftMotor.setPower(forward);
+//        backRightMotor.setPower(-forward);
+//        frontRightMotor.setPower(-forward);
+//        sleep(200);
+//        forward=0;
+//        backLeftMotor.setPower(forward);
+//        frontLeftMotor.setPower(forward);
+//        backRightMotor.setPower(-forward);
+//        frontRightMotor.setPower(-forward);
     }
 
 //    public void displayVisionPortalData(){
