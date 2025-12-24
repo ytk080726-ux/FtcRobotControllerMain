@@ -40,6 +40,9 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
         // Adjust the orientation parameters to match your robot
@@ -94,10 +97,10 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             // This ensures all the powers maintain the same ratio,
             // but only if at least one is out of the range [-1, 1]
             double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-            double frontLeftPower = (rotY + rotX + rx) / 1.5;
-            double backLeftPower = (rotY - rotX + rx) / 1.5;
-            double frontRightPower = (rotY - rotX - rx) / 1.5;
-            double backRightPower = -(rotY + rotX - rx) / 1.5;
+            double frontLeftPower = (rotY + rotX + rx) / 1.3;
+            double backLeftPower = (rotY - rotX + rx) / 1.3;
+            double frontRightPower = (rotY - rotX - rx) / 1.3;
+            double backRightPower = -(rotY + rotX - rx) / 1.3;
 
             frontLeftMotor.setPower(frontLeftPower);
 
@@ -135,6 +138,10 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             }
             if (gamepad1.rightBumperWasPressed())
                 launchUP.launch();
+            if(gamepad1.xWasPressed())
+            {
+                take.revers();
+            }
             telemetry.addData("state", launchUP.state());
             //if(gamepad1.dpadUpWasPressed())
             //{

@@ -73,15 +73,15 @@ public class FrontBlueAuto extends LinearOpMode {
         processDriveInputs();
     }
 
-    public void processDriveInputs(){
+    public void processDriveInputs() {
         turn = turn * maxDrivePower;
         forward = forward * 0.3;
         strafe = strafe * maxDrivePower;
         ballpush.set(false);
+
         if (detect.distance() > 78 && ballpush.getpos() < 0.5) {
-            launch.setPower((2800/ 60) * 28); // Start
-        }
-        else {
+            launch.setPower((2800 / 60) * 28); // Start
+        } else {
             launch.setPower(0); // Stop
         }
 
@@ -108,59 +108,54 @@ public class FrontBlueAuto extends LinearOpMode {
         sleep(670);
         launch.setPower(0);
         ballpush.set(true);
-        sleep(1000);
-        launch.setPower((2600/ 60) * 28);
+        sleep(1100);
+        launch.setPower((2550 / 60) * 28);
         ballpush.set(false);
         sleep(200);
         launch.setPower(0);
         ballpush.set(true);
-        sleep(1000);
-        launch.setPower((2600/ 60) * 28);
+        sleep(1100);
+        launch.setPower((2550 / 60) * 28);
         ballpush.set(false);
-        sleep(1000);
+        sleep(1100);
         launch.setPower(0);
         ballpush.set(true);
-        sleep(1000);
-        launch.setPower((2600/ 60) * 28);
+        sleep(1100);
+        launch.setPower((2400 / 60) * 28);
         ballpush.set(false);
-        sleep(1000);
+        sleep(1100);
         launch.setPower(0);
         ballpush.set(true);
-        sleep(1000);
-        launch.setPower((2600/ 60) * 28);
+        sleep(1100);
+        launch.setPower((2400 / 60) * 28);
         ballpush.set(false);
-        sleep(1000);
-        launch.setPower(0);
+        sleep(1100);launch.setPower(0);
         ballpush.set(true);
-        sleep(1000);
-        launch.setPower((2600/ 60) * 28);
+        sleep(1100);
+        launch.setPower((2400 / 60) * 28);
         ballpush.set(false);
+        sleep(1100);
+
+        forward = 0.7;
+        backLeftMotor.setPower(-forward);
+        frontLeftMotor.setPower(forward);
+        backRightMotor.setPower(-forward);
+        frontRightMotor.setPower(forward);
+        sleep(1400);
+
+        backLeftMotor.setPower(forward);
+        frontLeftMotor.setPower(forward);
+        backRightMotor.setPower(forward);
+        frontRightMotor.setPower(forward);
+        sleep(800);
+
+        forward = 0;
+        backLeftMotor.setPower(forward);
+        frontLeftMotor.setPower(forward);
+        backRightMotor.setPower(forward);
+        frontRightMotor.setPower(forward);
         sleep(200);
-//        forward=0.3;
-//        backLeftMotor.setPower(forward);
-//        frontLeftMotor.setPower(forward);
-//        backRightMotor.setPower(-forward);
-//        frontRightMotor.setPower(-forward);
-//        sleep(200);
-//        forward=0;
-//        backLeftMotor.setPower(forward);
-//        frontLeftMotor.setPower(forward);
-//        backRightMotor.setPower(-forward);
-//        frontRightMotor.setPower(-forward);
     }
-
-//    public void displayVisionPortalData(){
-//        AprilTagDetection AprilTagDetection = (AprilTagProcessor.getDetections());
-//
-//        for (AprilTagDetection myAprilTagDetection2 : AprilTagDetection) {
-//            AprilTagDetection = myAprilTagDetection2;
-//            telemetry.addData("ID", (AprilTagDetection.id));
-//            telemetry.addData("Range", (AprilTagDetection.ftcPose.range));
-//            telemetry.addData("Yaw", (AprilTagDetection.ftcPose.yaw));
-//        }
-//        telemetry.update();
-//    }
-
 
     @Override
   public void runOpMode() {
