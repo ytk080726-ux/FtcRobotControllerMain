@@ -25,8 +25,7 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         telemetry.update();
-        // Declare our motors
-        // Make sure your ID's match your configuration
+
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeftMotor");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
@@ -43,9 +42,7 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
-        // Adjust the orientation parameters to match your robot
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
                 RevHubOrientationOnRobot.UsbFacingDirection.UP));
@@ -61,7 +58,6 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
         telemetry.addData("imu", imu.getRobotYawPitchRollAngles());
         detect.output(telemetry);
         cam.init(hardwareMap,telemetry);
-        //cam.init(hardwareMap,telemetry);
         double power = 0.8;
 
         boolean state = false;
@@ -78,20 +74,16 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             detect.output(telemetry);
             telemetry.addData("color", detect.  getDetectedColor());
 
-            // This button choice was made so that it is hard to hit on accident,
-            // it can be freely changed based on preference.
-            // The equivalent button is start on Xbox-style controllers.
             if (gamepad1.options) {
                 imu.resetYaw();
             }
 
             double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
-            // Rotate the movement direction counter to the bot's rotation
             double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
             double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
 
-            rotX = rotX * 1.1;  // Counteract imperfect strafing
+            rotX = rotX * 1.1;
 
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio,
@@ -111,27 +103,22 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
             telemetry.addData("Distance", detect.distance());
 
             telemetry.addData("imu", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
-//            telemetry.addData("motor speed",launchUP.speed());
+
             if (gamepad1.aWasPressed()) {
                 take.type();
             }
 
             // Lower ball launcher
             if (detect.distance() > 78 && ballpush.getpos() < 0.5) {
-                launch.setPower((3300/ 60) * 28); // Start
+                launch.setPower((3300 / 60) * 28); // Start
             }
             else {
                 launch.setPower(0); // Stop
             }
 
-            // Sets the door to launch artifact depending of if Y pressed.
             // TODO: Make it toggle
             ballpush.set(gamepad1.y);
 
-            // Open/Close the gate for artifacts
-            //if (gamepad1.xWasPressed()) {
-            //    stop.position();
-            //}
             if(gamepad1.left_bumper)
             {
                 launchUP.sort();
@@ -143,40 +130,10 @@ public class FieldCentricMecanumTeleOpActual extends LinearOpMode {
                 take.revers();
             }
             telemetry.addData("state", launchUP.state());
-            //if(gamepad1.dpadUpWasPressed())
-            //{
-            //    cam.loop(telemetry);
-            //}
             AprilTagDetection id20=cam.getTagBySpecificId(20);
             AprilTagDetection id24=cam.getTagBySpecificId(24);
             cam.displayDetectionTelemetry(id20);
             cam.displayDetectionTelemetry(id24);
-//            if(gamepad1.dpad_left)
-//            {
-//                if(cam.pos((id20))<700)
-//                {
-//                    if(cam.pos(id20)>320) {
-//                        frontLeftMotor.setPower(0.2);
-//                        backLeftMotor.setPower(0.2);
-//                        frontRightMotor.setPower(-0.2);
-//                        backRightMotor.setPower(0.2);
-//                    }
-//                    else
-//                    {
-//                        frontLeftMotor.setPower(-0.2);
-//                        backLeftMotor.setPower(-0.2);
-//                        frontRightMotor.setPower(0.2);
-//                        backRightMotor.setPower(-0.2);
-//                    }
-//                }
-//                while(!(cam.pos(id20)<400&&cam.pos(id20)>200))
-//                {
-//                    cam.update();
-//                    cam.displayDetectionTelemetry(id20);
-//                    telemetry.update();
-//                }
-//                telemetry.addData("contgrat","success");
-//            }
         }
         telemetry.update();
     }
