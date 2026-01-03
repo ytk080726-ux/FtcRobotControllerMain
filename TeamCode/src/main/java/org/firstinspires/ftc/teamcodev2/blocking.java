@@ -12,7 +12,7 @@ public class blocking {
     }
     public void stopping(boolean state)
     {
-        if(state==true)
+        if(state)
         {
             block.setPosition(0.5);
         }
