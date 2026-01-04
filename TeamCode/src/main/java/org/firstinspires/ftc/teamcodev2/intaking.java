@@ -26,7 +26,7 @@ public class intaking {
         }
         state=!state;
     }
-    public void revers()
+    public void reverse()
     {
         if(intake.getDirection()== DcMotorSimple.Direction.FORWARD)
             intake.setDirection(DcMotorSimple.Direction.REVERSE);

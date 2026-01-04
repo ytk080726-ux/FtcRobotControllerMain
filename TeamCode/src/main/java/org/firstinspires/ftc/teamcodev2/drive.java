@@ -1,18 +1,16 @@
 package org.firstinspires.ftc.teamcodev2;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
-@TeleOp(name = "mainv2")
+@TeleOp(name = "(new) mainv2")
 
-public class mainoperation extends LinearOpMode {
+public class drive extends LinearOpMode {
     @Override
 
     public void runOpMode() throws InterruptedException {
@@ -42,7 +40,7 @@ public class mainoperation extends LinearOpMode {
                 RevHubOrientationOnRobot.UsbFacingDirection.UP));
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
-        mainoperation bot = new mainoperation();
+        drive bot = new drive();
         //cam.init(hardwareMap,telemetry);
         waitForStart();
 
