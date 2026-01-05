@@ -6,27 +6,22 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class lifting {
     private Servo left,right;
     private boolean state;
-    public void inti(HardwareMap hw)
+    public void init(HardwareMap hw)
     {
-        left=hw.get(Servo.class,"liftLeft");
-        right=hw.get(Servo.class,"liftRight");
-        left.setPosition(0);
-        right.setPosition(0);
-        state=false;
+        left=hw.get(Servo.class,"leftlift");
+        right=hw.get(Servo.class,"rightlift");
+        left.setPosition(0.35);
+        right.setPosition(0.35);
     }
-    public void lifting()
+    public void up()
     {
-        if(state==false)
-        {
-            right.setPosition(0.5);
-            left.setPosition(0.5);
-            state=true;
-        }
-        else
-        {
-            left.setPosition(0);
-            right.setPosition(0);
-            state=false;
-        }
+        right.setPosition(0.35);
+        left.setPosition(0.35);
+    }
+
+    public void down()
+    {
+        right.setPosition(0.18);
+        left.setPosition(0.5);
     }
 }

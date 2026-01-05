@@ -7,10 +7,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class intaking {
     boolean state;
     DcMotor intake;
+
     public void init(HardwareMap hw) {
         intake=hw.get(DcMotor.class,"intake");
         intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        intake.setDirection(DcMotorSimple.Direction.REVERSE );
+        intake.setDirection(DcMotorSimple.Direction.FORWARD );
         state=true;
     }
 
@@ -18,7 +19,7 @@ public class intaking {
     public void type() {
         if (state)
         {
-            intake.setPower(0.8);
+            intake.setPower(1.0);
         }
         else
         {

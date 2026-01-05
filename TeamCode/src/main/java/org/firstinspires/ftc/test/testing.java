@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class testing extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Servo testing = hardwareMap.servo.get("ms0");
+        DcMotor testing = hardwareMap.get(DcMotor.class,"1");
         while(true) {
-            testing.setPosition(00.1);
+            testing.setPower(0.7);
         }
 
     }

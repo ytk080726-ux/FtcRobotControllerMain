@@ -1,14 +1,17 @@
 package org.firstinspires.ftc.teamcodev2;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@TeleOp(name = "(new) mainv2")
+@TeleOp(name = "(new) mainV2")
 
 public class drive extends LinearOpMode {
     @Override
@@ -21,16 +24,26 @@ public class drive extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
+        Servo stopper = hardwareMap.servo.get("stopping");
+
+        DcMotor rightTurret = hardwareMap.dcMotor.get("turretRight");
+        DcMotor leftTurret = hardwareMap.dcMotor.get(("turretLeft"));
+
+        Servo leftLift = hardwareMap.servo.get("leftlift");
+        Servo rightLift = hardwareMap.servo.get("rightlift");
 
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
         // See the note about this earlier on this page.
-        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        rightTurret.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftTurret.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
@@ -45,6 +58,20 @@ public class drive extends LinearOpMode {
         waitForStart();
 
         if (isStopRequested()) return;
+
+        intaking intake = new intaking();
+        intake.init(hardwareMap);
+
+        blocking blocker = new blocking();
+        blocker.init(hardwareMap);
+
+        launching launch = new launching();
+        launch.init(hardwareMap);
+        transfer transport= new transfer();
+        transport.init(hardwareMap);
+
+        lifting lift = new lifting();
+        lift.init(hardwareMap);
 
         while (opModeIsActive()) {
 
@@ -75,16 +102,40 @@ public class drive extends LinearOpMode {
             double frontLeftPower = (rotY + rotX + rx) / 1.3;
             double backLeftPower = (rotY - rotX + rx) / 1.3;
             double frontRightPower = (rotY - rotX - rx) / 1.3;
-            double backRightPower = -(rotY + rotX - rx) / 1.3;
+            double backRightPower = (rotY + rotX - rx) / 1.3;
+
 
             frontLeftMotor.setPower(frontLeftPower);
-
             backLeftMotor.setPower(backLeftPower);
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
 
+
             telemetry.addData("imu", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
 //            telemetry.addData("motor speed",launchUP.speed());
+
+            if (gamepad1.aWasPressed()) {
+                intake.type();
+            }
+
+            if (gamepad1.bWasPressed()) {
+                blocker.stopping();
+            }
+
+            if (gamepad1.rightBumperWasPressed()) {
+                launch.launch();
+            }
+                transport.start(gamepad1.x);
+            telemetry.addData("mode",launch.state());
+            telemetry.update();
+
+            if (gamepad1.dpadUpWasPressed()) {
+                lift.up();
+            }
+
+            if (gamepad1.dpadDownWasPressed()) {
+                lift.down();
+            }
         }
         telemetry.update();
     }

@@ -16,7 +16,7 @@ public class launching {
         left.setDirection(DcMotorEx.Direction.FORWARD);
         right = hw.get(DcMotorEx.class, "turretRight");
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        right.setDirection(DcMotorEx.Direction.FORWARD);
+        right.setDirection(DcMotorEx.Direction.REVERSE);
         num=0;
         num1=0;
     }

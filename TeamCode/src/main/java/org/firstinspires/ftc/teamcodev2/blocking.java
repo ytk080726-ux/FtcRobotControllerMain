@@ -6,19 +6,24 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class blocking {
     private Servo block;
+    boolean state;
+
     public void init(HardwareMap hw)
     {
         block=hw.get(Servo.class,"stopping");
+        block.setPosition(0.20);
+        state = true;
     }
-    public void stopping(boolean state)
+    public void stopping()
     {
-        if(state )
+        if(state)
         {
-            block.setPosition(0.5);
+            block.setPosition(0.4);
         }
         else
         {
-            block.setPosition(0);
+            block.setPosition(0.20);
         }
+        state=!state;
     }
 }
