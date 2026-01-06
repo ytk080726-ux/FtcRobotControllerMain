@@ -1,84 +1,47 @@
 package org.firstinspires.ftc.teamcodev2;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.hardware.Servo;
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-
-@TeleOp(name = "(new) mainV2")
-
+@TeleOp (name = "(new) mainV2")
 public class drive extends LinearOpMode {
     @Override
-
     public void runOpMode() throws InterruptedException {
-        telemetry.update();
         // Declare our motors
         // Make sure your ID's match your configuration
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
-        Servo stopper = hardwareMap.servo.get("stopping");
-
-        DcMotor rightTurret = hardwareMap.dcMotor.get("turretRight");
-        DcMotor leftTurret = hardwareMap.dcMotor.get(("turretLeft"));
-
-        Servo leftLift = hardwareMap.servo.get("leftlift");
-        Servo rightLift = hardwareMap.servo.get("rightlift");
-
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
         // See the note about this earlier on this page.
-        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        rightTurret.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftTurret.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
         // Adjust the orientation parameters to match your robot
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
-                RevHubOrientationOnRobot.UsbFacingDirection.UP));
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
-        drive bot = new drive();
-        //cam.init(hardwareMap,telemetry);
+
         waitForStart();
 
         if (isStopRequested()) return;
 
-        intaking intake = new intaking();
-        intake.init(hardwareMap);
-
-        blocking blocker = new blocking();
-        blocker.init(hardwareMap);
-
-        launching launch = new launching();
-        launch.init(hardwareMap);
-        transfer transport= new transfer();
-        transport.init(hardwareMap);
-
-        lifting lift = new lifting();
-        lift.init(hardwareMap);
-
         while (opModeIsActive()) {
-
-            telemetry.update();
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double x = gamepad1.left_stick_x;
-            double rx = gamepad1.right_stick_x;
+            double x = -gamepad1.left_stick_x;
+            double rx = -gamepad1.right_stick_x;
 
             // This button choice was made so that it is hard to hit on accident,
             // it can be freely changed based on preference.
@@ -104,40 +67,10 @@ public class drive extends LinearOpMode {
             double frontRightPower = (rotY - rotX - rx) / 1.3;
             double backRightPower = (rotY + rotX - rx) / 1.3;
 
-
             frontLeftMotor.setPower(frontLeftPower);
             backLeftMotor.setPower(backLeftPower);
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
-
-
-            telemetry.addData("imu", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
-//            telemetry.addData("motor speed",launchUP.speed());
-
-            if (gamepad1.aWasPressed()) {
-                intake.type();
-            }
-
-            if (gamepad1.bWasPressed()) {
-                blocker.stopping();
-            }
-
-            if (gamepad1.rightBumperWasPressed()) {
-                launch.launch();
-            }
-                transport.start(gamepad1.x);
-            telemetry.addData("mode",launch.state());
-            telemetry.update();
-
-            if (gamepad1.dpadUpWasPressed()) {
-                lift.up();
-            }
-
-            if (gamepad1.dpadDownWasPressed()) {
-                lift.down();
-            }
         }
-        telemetry.update();
     }
 }
-
