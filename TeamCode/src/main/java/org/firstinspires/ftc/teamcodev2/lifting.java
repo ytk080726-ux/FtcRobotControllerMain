@@ -22,6 +22,6 @@ public class lifting {
     public void down()
     {
         right.setPosition(0.18);
-        left.setPosition(0.5);
+        left.setPosition(0.18);
     }
 }
