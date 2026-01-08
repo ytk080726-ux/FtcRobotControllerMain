@@ -15,7 +15,7 @@ public class transfer {
     public void start(boolean state)
         {
             if(state) {
-                transfer.setPower(0.18);
+                transfer.setPower(0.15);
             }
             else
             {
