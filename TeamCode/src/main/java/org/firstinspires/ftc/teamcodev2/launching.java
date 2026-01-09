@@ -18,7 +18,6 @@ public class launching {
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right.setDirection(DcMotorEx.Direction.REVERSE);
         num=0;
-        num1=0;
     }
 
     //launch.setTargetPosition((int) (28/(Math.PI*96)));
