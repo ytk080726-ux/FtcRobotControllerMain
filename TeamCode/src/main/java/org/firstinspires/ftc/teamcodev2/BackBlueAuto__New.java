@@ -4,18 +4,14 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.intake;
-import org.firstinspires.ftc.teamcode.launchU;
-import org.firstinspires.ftc.teamcode.launcherB;
-import org.firstinspires.ftc.teamcode.pushing;
-import org.firstinspires.ftc.teamcode.sensor;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-@Autonomous(name = "Front Blue Auto")
-public class FrontBlueAuto__New extends LinearOpMode {
+@Autonomous(name = "Back Blue Auto")
+public class BackBlueAuto__New extends LinearOpMode {
     DcMotor backRight;
     DcMotor frontRight;
     DcMotor frontLeft;
@@ -28,8 +24,8 @@ public class FrontBlueAuto__New extends LinearOpMode {
     double shootPower, forward;
     transfer transfer;
     launching launch;
-    private blocking blocking;
     intake intake;
+    blocking blocker;
     private VisionPortal visionPortal;
     private AprilTagProcessor AprilTagProcessor;
 
@@ -40,12 +36,10 @@ public class FrontBlueAuto__New extends LinearOpMode {
         transfer = new transfer();
         launch = new launching();
         intake = new intake();
-        blocking = new blocking();
-
+        blocker = new blocking();
         isShooting = false;
-        blocking.init(hardwareMap);
+        blocker.init(hardwareMap);
         transfer.init(hardwareMap);
-        launch.init(hardwareMap);
         launch.init(hardwareMap);
         intake.init(hardwareMap);
     }
@@ -70,29 +64,16 @@ public class FrontBlueAuto__New extends LinearOpMode {
         strafe = strafe * maxDrivePower;
         transfer.start();
 
-        backRight.setPower(-forward);
-        backLeft.setPower(-forward);
-        frontRight.setPower(-forward);
-        frontLeft.setPower(-forward);
-        sleep(600);
+        launch.launch();
+        sleep(500);
+        blocker.stopping(true);
+        sleep(2000);
 
-        launch.launch();
-        launch.launch();
-        backRight.setPower(0);
-        backLeft.setPower(0);
-        frontRight.setPower(0);
-        frontLeft.setPower(0);
-        sleep(1000);
-        blocking.stopping(true);
-        sleep(5000);
-
-        launch.launch();
-        launch.launch();
         backRight.setPower(0);
         backLeft.setPower(0.55);
         frontRight.setPower(1);
         frontLeft.setPower(0);
-        sleep(1070);
+        sleep(500);
 
         backRight.setPower(0);
         backLeft.setPower(0);

@@ -18,38 +18,55 @@ public class launching {
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right.setDirection(DcMotorEx.Direction.REVERSE);
         num=0;
+        tps =0;
     }
-
-    //launch.setTargetPosition((int) (28/(Math.PI*96)));
-
 
     public void launch()
     {
         if(num==0) {
-            left.setVelocity(((3460/ 60) * 28)); // State 3
-            right.setVelocity(((3460/ 60) * 28)); // State 3
-
+            tps=(4400);
             num = 3;
         } else if (num == 3) {
-            left.setVelocity(((2625/60)*28)); // State 2
-            right.setVelocity(((2625/60)*28)); // State 2
-
+            tps=(2200);
             num=2;
         } else if (num==2) {
-            left.setVelocity(((2567/60)*28)); // State 1
-            right.setVelocity(((2567/60)*28)); // State 1
-
+            tps=(1800);
             num=1;
         }
         else{
-            left.setVelocity(0);
-            right.setVelocity(0);
-
+            tps=0;
             num=0;
         }
+        left.setVelocity(tps);
+        right.setVelocity(tps);
     }
     public int state()
     {
         return num;
     }
-}
+    public double showRPM()
+    {
+        return tps;
+    }
+    public void increase()
+        {
+            if(tps<(6000))
+            {
+                tps+=50;
+            }
+            left.setVelocity(tps);
+            right.setVelocity(tps);
+
+        }
+        public void decrease()
+        {
+            if(tps>0)
+            {
+                tps-=50;
+            }
+            left.setVelocity(tps);
+            right.setVelocity(tps);
+
+        }
+        }
+

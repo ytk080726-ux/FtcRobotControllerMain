@@ -42,14 +42,15 @@ public class drive extends LinearOpMode {
         intaking intake = new intaking();
         intake.init(hardwareMap);
 
+        transfer transfer = new transfer();
+        transfer.init(hardwareMap);
+
         blocking blocker = new blocking();
         blocker.init(hardwareMap);
 
         launching launch = new launching();
         launch.init(hardwareMap);
 
-        transfer transport= new transfer();
-        transport.init(hardwareMap);
 
         lifting lift = new lifting();
         lift.init(hardwareMap);
@@ -92,18 +93,19 @@ public class drive extends LinearOpMode {
             if (gamepad1.aWasPressed()) {
                 intake.type();
             }
-
-            if (gamepad1.bWasPressed()) {
-                blocker.stopping();
+            if(gamepad1.xWasPressed()) {
+                transfer.start();
             }
+
+            blocker.stopping(gamepad1.b);
 
             if (gamepad1.rightBumperWasPressed()) {
                 launch.launch();
             }
 
-            transport.start(gamepad1.x);
             telemetry.addData("mode",launch.state());
             telemetry.update();
+            telemetry.addData("Speed",launch.showRPM());
 
             if (gamepad1.dpadUpWasPressed()) {
                 lift.up();
@@ -111,6 +113,14 @@ public class drive extends LinearOpMode {
 
             if (gamepad1.dpadDownWasPressed()) {
                 lift.down();
+            }
+            if(gamepad1.dpadLeftWasPressed())
+            {
+                launch.decrease();
+            }
+            if(gamepad1.dpadRightWasPressed())
+            {
+                launch.increase();
             }
         }
         telemetry.update();

@@ -14,7 +14,7 @@ public class blocking {
         block.setPosition(0.20);
         state = true;
     }
-    public void stopping()
+    public void stopping(boolean state)
     {
         if(state)
         {
@@ -24,6 +24,5 @@ public class blocking {
         {
             block.setPosition(0.20);
         }
-        state=!state;
     }
 }

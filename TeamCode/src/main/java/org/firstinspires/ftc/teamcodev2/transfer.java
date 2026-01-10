@@ -5,21 +5,25 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class transfer {
+    boolean toggle;
     private DcMotor transfer;
     public void init(HardwareMap hw)
     {
         transfer= hw.get(DcMotor.class,"transfer");
         transfer.setDirection(DcMotorSimple.Direction.FORWARD);
         transfer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        toggle=true;
     }
-    public void start(boolean state)
+
+    public void start() {
+        if (toggle)
         {
-            if(state) {
-                transfer.setPower(0.15);
-            }
-            else
-            {
-                transfer.setPower(0);
-            }
+            transfer.setPower(0.05);
         }
+        else
+        {
+            transfer.setPower(0);
+        }
+        toggle=!toggle;
+    }
 }

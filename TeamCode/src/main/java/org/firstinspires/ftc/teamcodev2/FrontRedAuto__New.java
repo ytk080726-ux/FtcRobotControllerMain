@@ -4,8 +4,13 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.intake;
+import org.firstinspires.ftc.teamcode.launchU;
+import org.firstinspires.ftc.teamcode.launcherB;
+import org.firstinspires.ftc.teamcode.pushing;
+import org.firstinspires.ftc.teamcode.sensor;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
@@ -23,6 +28,7 @@ public class FrontRedAuto__New extends LinearOpMode {
     double shootPower, forward;
     transfer transfer;
     launching launch;
+    private blocking blocking;
     intake intake;
     private VisionPortal visionPortal;
     private AprilTagProcessor AprilTagProcessor;
@@ -34,8 +40,10 @@ public class FrontRedAuto__New extends LinearOpMode {
         transfer = new transfer();
         launch = new launching();
         intake = new intake();
-        isShooting = false;
+        blocking = new blocking();
 
+        isShooting = false;
+        blocking.init(hardwareMap);
         transfer.init(hardwareMap);
         launch.init(hardwareMap);
         launch.init(hardwareMap);
@@ -60,20 +68,27 @@ public class FrontRedAuto__New extends LinearOpMode {
         turn = turn * maxDrivePower;
         forward = forward * 0.7;
         strafe = strafe * maxDrivePower;
-        transfer.start(false);
+        transfer.start();
 
         backRight.setPower(-forward);
         backLeft.setPower(-forward);
         frontRight.setPower(-forward);
         frontLeft.setPower(-forward);
-        sleep(500);
+        sleep(600);
 
+        launch.launch();
+        launch.launch();
         backRight.setPower(0);
         backLeft.setPower(0);
         frontRight.setPower(0);
         frontLeft.setPower(0);
+        sleep(1000);
+        blocking.stopping(true);
         sleep(5000);
 
+        launch.launch();
+        launch.launch();
+        intake.type();
         backRight.setPower(0.55);
         backLeft.setPower(0);
         frontRight.setPower(0);
@@ -84,11 +99,12 @@ public class FrontRedAuto__New extends LinearOpMode {
         backLeft.setPower(0);
         frontRight.setPower(0);
         frontLeft.setPower(0);
+        intake.type();
         sleep(100);
     }
 
     @Override
-  public void runOpMode() {
+    public void runOpMode() {
 //        VisionPortal.Builder builder = new VisionPortal.Builder();
 //        visionPortal = (builder.build());
 //        builder.setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"));
@@ -97,11 +113,11 @@ public class FrontRedAuto__New extends LinearOpMode {
 //        builder.addProcessor(AprilTagProcessor);
 
 
-         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-         backRight = hardwareMap.get(DcMotor.class, "backRight");
+        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
+        backRight = hardwareMap.get(DcMotor.class, "backRight");
 
-         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         inititalSetup();
         shootPower = 0.8;
