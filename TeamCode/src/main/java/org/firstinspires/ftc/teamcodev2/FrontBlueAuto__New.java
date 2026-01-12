@@ -29,7 +29,7 @@ public class FrontBlueAuto__New extends LinearOpMode {
     transfer transfer;
     launching launch;
     private blocking blocking;
-    intake intake;
+    intaking intake;
     private VisionPortal visionPortal;
     private AprilTagProcessor AprilTagProcessor;
 
@@ -39,7 +39,7 @@ public class FrontBlueAuto__New extends LinearOpMode {
 
         transfer = new transfer();
         launch = new launching();
-        intake = new intake();
+        intake = new intaking();
         blocking = new blocking();
 
         isShooting = false;
@@ -69,7 +69,7 @@ public class FrontBlueAuto__New extends LinearOpMode {
         forward = forward * 0.7;
         strafe = strafe * maxDrivePower;
         transfer.start();
-
+        intake.auto2();
         backRight.setPower(-forward);
         backLeft.setPower(-forward);
         frontRight.setPower(-forward);
@@ -84,7 +84,7 @@ public class FrontBlueAuto__New extends LinearOpMode {
         frontLeft.setPower(0);
         sleep(1000);
         blocking.stopping(true);
-        sleep(5000);
+        sleep(3000);
 
         launch.launch();
         launch.launch();

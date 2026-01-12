@@ -34,4 +34,8 @@ public class intaking {
         else
             intake.setDirection(DcMotorSimple.Direction.FORWARD);
     }
+    public void auto2()
+    {
+        intake.setPower(1);
+    }
 }

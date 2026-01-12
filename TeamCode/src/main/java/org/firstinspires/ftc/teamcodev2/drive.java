@@ -122,6 +122,10 @@ public class drive extends LinearOpMode {
             {
                 launch.increase();
             }
+            if(gamepad1.left_trigger>0)
+            {
+                imu.resetYaw();
+            }
         }
         telemetry.update();
     }
