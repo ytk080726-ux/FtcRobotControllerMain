@@ -73,6 +73,7 @@ public class FrontBlueAuto__New extends LinearOpMode {
         backRight.setPower(-forward);
         backLeft.setPower(-forward);
         frontRight.setPower(-forward);
+
         frontLeft.setPower(-forward);
         sleep(600);
 

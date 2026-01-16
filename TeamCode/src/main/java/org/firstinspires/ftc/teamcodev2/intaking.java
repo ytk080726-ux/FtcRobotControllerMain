@@ -29,13 +29,18 @@ public class intaking {
     }
     public void reverse()
     {
-        if(intake.getDirection()== DcMotorSimple.Direction.FORWARD)
-            intake.setDirection(DcMotorSimple.Direction.REVERSE);
+        if (state)
+        {
+            intake.setPower(-1.0);
+        }
         else
-            intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        {
+            intake.setPower(0);
+        }
+        state=!state;
     }
     public void auto2()
     {
-        intake.setPower(1);
+        intake.setPower(1 );
     }
 }

@@ -51,6 +51,8 @@ public class drive extends LinearOpMode {
         launching launch = new launching();
         launch.init(hardwareMap);
 
+        apriltag april = new apriltag();
+        april.init(hardwareMap);
 
         lifting lift = new lifting();
         lift.init(hardwareMap);
@@ -93,6 +95,11 @@ public class drive extends LinearOpMode {
             if (gamepad1.aWasPressed()) {
                 intake.type();
             }
+
+            if (gamepad1.yWasPressed()) {
+                intake.reverse();
+            }
+
             if(gamepad1.xWasPressed()) {
                 transfer.start();
             }
@@ -106,6 +113,7 @@ public class drive extends LinearOpMode {
             telemetry.addData("mode",launch.state());
             telemetry.update();
             telemetry.addData("Speed",launch.showRPM());
+            telemetry.addData("Distance: ", april.getDistance());
 
             if (gamepad1.dpadUpWasPressed()) {
                 lift.up();
