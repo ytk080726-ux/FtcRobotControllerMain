@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class launching {
     DcMotorEx left,right;
     int num;
-    int num1;
+    boolean state;
     double tps;
     public void init(HardwareMap hw) {
         left = hw.get(DcMotorEx.class, "turretLeft");
@@ -21,22 +21,20 @@ public class launching {
         tps =0;
     }
 
-    public void launch()
+    public void launch(double distance)
     {
-        if(num==0) {
-            tps=(4400);
-            num = 3;
-        } else if (num == 3) {
+        if (distance < 1.5) {
+            tps=(1700);
+        } else if (distance > 1.5 && distance < 2) {
             tps=(2200);
-            num=2;
-        } else if (num==2) {
-            tps=(1800);
-            num=1;
+        } else if (distance > 2.5) {
+            tps=(4400);
         }
-        else{
-            tps=0;
-            num=0;
+        else
+        {
+           tps = 0;
         }
+
         left.setVelocity(tps);
         right.setVelocity(tps);
     }
