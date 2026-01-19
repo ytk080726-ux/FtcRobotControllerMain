@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcodev2;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -15,11 +12,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
-import java.util.List;
-import java.util.Locale;
-
-@TeleOp(name = "(new) driveV2")
-public class drive extends LinearOpMode {
+@TeleOp(name = "BlueTeleOp")
+public class BlueTeleOp extends LinearOpMode {
     private Limelight3A limelight;
     DcMotor frontLeftMotor;
     DcMotor backLeftMotor;
@@ -153,11 +147,36 @@ public class drive extends LinearOpMode {
             {
                 imu.resetYaw();
             }
+
+
             if(gamepad1.leftBumperWasPressed())
             {
-                correct();
+                LLResult llresult = limelight.getLatestResult();
+                if(llresult != null && llresult.isValid()&&getDistance()!=0) {
+                    updating();
+                    llresult = limelight.getLatestResult();
+
+                    if (llresult.getTx() < 1)
+                    {
+                        frontRightMotor.setPower(0.1);
+                        frontLeftMotor.setPower(-0.1);
+                        backLeftMotor.setPower(-0.1);
+                        backRightMotor.setPower(0.1);
+                    }
+                    else if (llresult.getTx() > 1)
+                    {
+                        frontRightMotor.setPower(-0.1);
+                        frontLeftMotor.setPower(0.1);
+                        backLeftMotor.setPower(0.1);
+                        backRightMotor.setPower(-0.1);
+                    }
+                }
+                frontRightMotor.setPower(0);
+                frontLeftMotor.setPower(0);
+                backLeftMotor.setPower(0);
+                backRightMotor.setPower(0);
+                }
             }
-        }
         telemetry.update();
     }
     public void updating() {
@@ -191,36 +210,6 @@ public class drive extends LinearOpMode {
             telemetry.addData("first",ty);
         }
         return (scale);
-    }
-    public void correct()
-    {
-        LLResult llresult = limelight.getLatestResult();
-        if(llresult != null && llresult.isValid()&&getDistance()!=0) {
-            while(!(llresult.getTx() < 6 && llresult.getTx() > 6))
-            {
-                updating();
-                llresult = limelight.getLatestResult();
-
-                if (llresult.getTx() < 1)
-                {
-                    frontRightMotor.setPower(0.1);
-                    frontLeftMotor.setPower(-0.1);
-                    backLeftMotor.setPower(-0.1);
-                    backRightMotor.setPower(0.1);
-                }
-                else if (llresult.getTx() > 1)
-                {
-                    frontRightMotor.setPower(-0.1);
-                    frontLeftMotor.setPower(0.1);
-                    backLeftMotor.setPower(0.1);
-                    backRightMotor.setPower(-0.1);
-                }
-            }
-            frontRightMotor.setPower(0);
-            frontLeftMotor.setPower(0);
-            backLeftMotor.setPower(0);
-            backRightMotor.setPower(0);
-        }
     }
 
 }
