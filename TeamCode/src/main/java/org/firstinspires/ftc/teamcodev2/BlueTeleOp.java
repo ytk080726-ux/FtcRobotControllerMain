@@ -19,6 +19,7 @@ public class BlueTeleOp extends LinearOpMode {
     DcMotor backLeftMotor;
     DcMotor frontRightMotor;
     DcMotor backRightMotor;
+    aprilthing april;
     IMU imu;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -70,7 +71,7 @@ public class BlueTeleOp extends LinearOpMode {
         lifting lift = new lifting();
         lift.init(hardwareMap);
 
-
+        april=new aprilthing();
         while (opModeIsActive()) {
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x;
@@ -120,21 +121,16 @@ public class BlueTeleOp extends LinearOpMode {
             blocker.stopping(gamepad1.b);
 
             launch.launch(getDistance());
-
-            telemetry.addData("mode",launch.state());
             telemetry.update();
+            telemetry.addData("mode",launch.state());
+            telemetry.addData("state",launch.giveState());
             telemetry.addData("Speed",launch.showRPM());
             updating();
             telemetry.addData("Distance: ",getDistance());
+            telemetry.addData("limelight",limedistance());
 
 
-            if (gamepad1.dpadUpWasPressed()) {
-                lift.up();
-            }
 
-            if (gamepad1.dpadDownWasPressed()) {
-                lift.down();
-            }
             if(gamepad1.dpadLeftWasPressed())
             {
                 launch.decrease();
@@ -147,29 +143,39 @@ public class BlueTeleOp extends LinearOpMode {
             {
                 imu.resetYaw();
             }
-
+            if(gamepad1.dpadUpWasPressed())
+            {
+                launch.setState();
+            }
+            if(gamepad1.rightBumperWasPressed())
+            {
+                launch.settingState();
+            }
 
             if(gamepad1.leftBumperWasPressed())
             {
                 LLResult llresult = limelight.getLatestResult();
+
                 if(llresult != null && llresult.isValid()&&getDistance()!=0) {
                     updating();
                     llresult = limelight.getLatestResult();
 
-                    if (llresult.getTx() < 1)
+                    if (llresult.getTx() > 1)
                     {
                         frontRightMotor.setPower(0.1);
                         frontLeftMotor.setPower(-0.1);
                         backLeftMotor.setPower(-0.1);
                         backRightMotor.setPower(0.1);
                     }
-                    else if (llresult.getTx() > 1)
+                    else if (llresult.getTx() < -1)
                     {
                         frontRightMotor.setPower(-0.1);
                         frontLeftMotor.setPower(0.1);
                         backLeftMotor.setPower(0.1);
                         backRightMotor.setPower(-0.1);
                     }
+                    while(llresult.getTx() >  1&&llresult.getTx() < 1)
+                    {}
                 }
                 frontRightMotor.setPower(0);
                 frontLeftMotor.setPower(0);
@@ -184,12 +190,7 @@ public class BlueTeleOp extends LinearOpMode {
         limelight.updateRobotOrientation(orientation.getYaw());
         LLResult llresult = limelight.getLatestResult();
         if(llresult != null && llresult.isValid()) {
-            Pose3D botPose = llresult.getBotpose();
-            telemetry.addData("Tx", llresult.getTx());
-            telemetry.addData("Ty", llresult.getTy());
-            telemetry.addData("Ta", llresult.getTa());
-            telemetry.addData("bot pose",botPose.toString());
-            telemetry.addData("yaw",botPose.getOrientation().getYaw(AngleUnit.DEGREES));
+
         }
         else
         {
@@ -198,7 +199,20 @@ public class BlueTeleOp extends LinearOpMode {
     }
     public double getDistance() {
         updating();
-        double up=0.75;
+        double up=0.745;
+        double scale= 0;
+        LLResult llresult = limelight.getLatestResult();
+        if(llresult != null && llresult.isValid()) {
+            double tx =llresult.getTx();
+            scale=april.getDistance(tx,limedistance());
+            telemetry.addData("tx",tx);
+        }
+        return (scale);
+    }
+    public double limedistance()
+    {
+        updating();
+        double up=0.745;
         double scale= 0;
         LLResult llresult = limelight.getLatestResult();
         if(llresult != null && llresult.isValid()) {
@@ -206,10 +220,9 @@ public class BlueTeleOp extends LinearOpMode {
             Object LimelightHelpers;
             double ty =llresult.getTy();
             double first = (up - 0.277) / (Math.tan(Math.toRadians(20 + ty)));
-            scale=(first);
-            telemetry.addData("first",ty);
+            scale=first;
+            telemetry.addData("ty",ty);
         }
         return (scale);
     }
-
 }
