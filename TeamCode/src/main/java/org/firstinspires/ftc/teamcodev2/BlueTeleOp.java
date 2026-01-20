@@ -125,7 +125,6 @@ public class BlueTeleOp extends LinearOpMode {
             telemetry.addData("mode",launch.state());
             telemetry.addData("state",launch.giveState());
             telemetry.addData("Speed",launch.showRPM());
-            updating();
             telemetry.addData("Distance: ",getDistance());
             telemetry.addData("limelight",limedistance());
 
@@ -152,7 +151,7 @@ public class BlueTeleOp extends LinearOpMode {
                 launch.settingState();
             }
 
-            if(gamepad1.leftBumperWasPressed())
+            if(gamepad1.left_bumper)
             {
                 LLResult llresult = limelight.getLatestResult();
 
@@ -160,30 +159,32 @@ public class BlueTeleOp extends LinearOpMode {
                     updating();
                     llresult = limelight.getLatestResult();
 
-                    if (llresult.getTx() > 1)
+                    if (llresult.getTx() > 7)
                     {
-                        frontRightMotor.setPower(0.1);
-                        frontLeftMotor.setPower(-0.1);
-                        backLeftMotor.setPower(-0.1);
-                        backRightMotor.setPower(0.1);
+                        frontRightMotor.setPower(-0.2);
+                        frontLeftMotor.setPower(0.2);
+                        backLeftMotor.setPower(0.2);
+                        backRightMotor.setPower(-0.2);
                     }
-                    else if (llresult.getTx() < -1)
+                    else if (llresult.getTx() < 5)
                     {
-                        frontRightMotor.setPower(-0.1);
-                        frontLeftMotor.setPower(0.1);
-                        backLeftMotor.setPower(0.1);
-                        backRightMotor.setPower(-0.1);
+                        frontRightMotor.setPower(0.2);
+                        frontLeftMotor.setPower(-0.2);
+                        backLeftMotor.setPower(-0.2);
+                        backRightMotor.setPower(0.2);
                     }
-                    while(llresult.getTx() >  1&&llresult.getTx() < 1)
-                    {}
-                }
-                frontRightMotor.setPower(0);
-                frontLeftMotor.setPower(0);
-                backLeftMotor.setPower(0);
-                backRightMotor.setPower(0);
+
+                    while (llresult.getTx() > 7 || llresult.getTx() < 5) {
+                        llresult = limelight.getLatestResult();
+                        updating();
+                        telemetry.addData("TX", llresult.getTx());
+                        telemetry.update();
+                    }
                 }
             }
-        telemetry.update();
+            updating();
+            telemetry.update();
+        }
     }
     public void updating() {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();

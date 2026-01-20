@@ -31,7 +31,7 @@ public class launching {
             } else if (distance > 1.3  && distance < 2.5) {
                 tps = (2200);
             } else if (distance > 2.5) {
-                tps = (4400);
+                tps = (3400);
             } else {
                 tps = 0;
             }
@@ -50,10 +50,10 @@ public class launching {
             }
             else if(state==3)
             {
-                tps=4400;
+                tps=3400;
             }
             else {
-                tps=4400;
+                tps=2200;
             }
         }
 

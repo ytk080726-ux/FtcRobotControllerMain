@@ -131,8 +131,6 @@ public class RedTeleOp extends LinearOpMode {
             telemetry.addData("Distance: ",getDistance());
             telemetry.addData("limelight",limedistance());
 
-
-
             if(gamepad1.dpadLeftWasPressed())
             {
                 launch.decrease();
@@ -160,23 +158,26 @@ public class RedTeleOp extends LinearOpMode {
                 LLResult llresult = limelight.getLatestResult();
                 if(llresult != null && llresult.isValid()&&getDistance()!=0) {
                     updating();
+                    double angle=20;
                     telemetry.addData("angle",april.getAngle(llresult.getTy(),limedistance(),getDistance()));
-                    if (llresult.getTx() >  1)
+                    if (llresult.getTx() >  angle)
                     {
-                        frontRightMotor.setPower(0.1);
-                        frontLeftMotor.setPower(-0.1);
-                        backLeftMotor.setPower(-0.1);
-                        backRightMotor.setPower(0.1);
+                        frontRightMotor.setPower(0.3);
+                        frontLeftMotor.setPower(-0.3);
+                        backLeftMotor.setPower(-0.3);
+                        backRightMotor.setPower(0.3);
                     }
-                    else if (llresult.getTx() < -1)
+                    else if (llresult.getTx() < -angle)
                     {
-                        frontRightMotor.setPower(-0.1);
-                        frontLeftMotor.setPower(0.1);
-                        backLeftMotor.setPower(0.1);
-                        backRightMotor.setPower(-0.1);
+                        frontRightMotor.setPower(-0.3);
+                        frontLeftMotor.setPower(0.3);
+                        backLeftMotor.setPower(0.3);
+                        backRightMotor.setPower(-0.3);
                     }
-                    while(llresult.getTx() >  1&&llresult.getTx() < 1)
-                    {}
+                    while(!(llresult.getTx() <  angle&&llresult.getTx() > -angle))
+                    {updating();
+                        telemetry.addData("angle",april.getAngle(llresult.getTx(),limedistance(),april.getDistance(llresult.getTx(),limedistance())));
+                    }
                 }
                 frontRightMotor.setPower(0);
                 frontLeftMotor.setPower(0);
