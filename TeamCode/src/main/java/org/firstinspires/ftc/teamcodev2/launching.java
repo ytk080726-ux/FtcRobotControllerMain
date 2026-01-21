@@ -26,12 +26,16 @@ public class launching {
         if(num==0) {
             if (distance == 0) {
                 tps = (0);
-            } else if (distance < 1.3) {
+            } else if (distance <= 1.3) {
                 tps = (1700);
-            } else if (distance > 1.3  && distance < 2.5) {
+            }
+            else if (distance > 1.3 && distance <= 1.6) {
+                tps = (2000);
+            }
+            else if (distance > 1.6 && distance <= 2.5) {
                 tps = (2200);
             } else if (distance > 2.5) {
-                tps = (3400);
+                tps = (4400);
             } else {
                 tps = 0;
             }
@@ -46,7 +50,7 @@ public class launching {
             }
             else if(state==2)
             {
-                tps=2200;
+                tps=2100;
             }
             else if(state==3)
             {

@@ -20,6 +20,7 @@ public class BlueTeleOp extends LinearOpMode {
     DcMotor frontRightMotor;
     DcMotor backRightMotor;
     aprilthing april;
+    private double targetX;
     IMU imu;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -128,7 +129,20 @@ public class BlueTeleOp extends LinearOpMode {
             telemetry.addData("Distance: ",getDistance());
             telemetry.addData("limelight",limedistance());
 
+            YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+            limelight.updateRobotOrientation(orientation.getYaw());
+            LLResult llresult = limelight.getLatestResult();
 
+            if(llresult != null && llresult.isValid()) {
+                llresult = limelight.getLatestResult();
+                targetX = llresult.getTx();
+                telemetry.addData("TX", targetX);
+                telemetry.update();
+            }
+            else
+            {
+                telemetry.addData("lielight","no");
+            }
 
             if(gamepad1.dpadLeftWasPressed())
             {
@@ -153,54 +167,32 @@ public class BlueTeleOp extends LinearOpMode {
 
             if(gamepad1.left_bumper)
             {
-                LLResult llresult = limelight.getLatestResult();
-
                 if(llresult != null && llresult.isValid()&&getDistance()!=0) {
-                    updating();
-                    llresult = limelight.getLatestResult();
-
-                    if (llresult.getTx() > 7)
+                    if (targetX > 7)
                     {
-                        frontRightMotor.setPower(-0.4);
-                        frontLeftMotor.setPower(0.4);
-                        backLeftMotor.setPower(0.4);
-                        backRightMotor.setPower(-0.4);
+                        frontRightMotor.setPower(-0.5);
+                        frontLeftMotor.setPower(0.5);
+                        backLeftMotor.setPower(0.5);
+                        backRightMotor.setPower(-0.5);
                     }
-                    else if (llresult.getTx() < 5)
+                    else if (targetX < 5)
                     {
-                        frontRightMotor.setPower(0.4);
-                        frontLeftMotor.setPower(-0.4);
-                        backLeftMotor.setPower(-0.4);
-                        backRightMotor.setPower(0.4);
+                        frontRightMotor.setPower(0.5);
+                        frontLeftMotor.setPower(-0.5);
+                        backLeftMotor.setPower(-0.5);
+                        backRightMotor.setPower(0.5);
                     }
-
-                    while (llresult.getTx() > 7 || llresult.getTx() < 5) {
-                        llresult = limelight.getLatestResult();
-                        updating();
-                        telemetry.addData("TX", llresult.getTx());
-                        telemetry.update();
-                    }
+                    frontRightMotor.setPower(0);
+                    frontLeftMotor.setPower(0);
+                    backLeftMotor.setPower(0);
+                    backRightMotor.setPower(0);
                     gamepad1.rumble(100);
                 }
             }
-            updating();
             telemetry.update();
         }
     }
-    public void updating() {
-        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        limelight.updateRobotOrientation(orientation.getYaw());
-        LLResult llresult = limelight.getLatestResult();
-        if(llresult != null && llresult.isValid()) {
-
-        }
-        else
-        {
-            telemetry.addData("lielight","no");
-        }
-    }
     public double getDistance() {
-        updating();
         double up=0.745;
         double scale= 0;
         LLResult llresult = limelight.getLatestResult();
@@ -213,7 +205,6 @@ public class BlueTeleOp extends LinearOpMode {
     }
     public double limedistance()
     {
-        updating();
         double up=0.745;
         double scale= 0;
         LLResult llresult = limelight.getLatestResult();
