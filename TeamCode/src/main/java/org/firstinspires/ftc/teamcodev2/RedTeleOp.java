@@ -30,10 +30,10 @@ public class RedTeleOp extends LinearOpMode {
                 RevHubOrientationOnRobot.UsbFacingDirection.UP);
         // Declare our motors
         // Make sure your ID's match your configuration
-         frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
-         backLeftMotor = hardwareMap.dcMotor.get("backLeft");
-         frontRightMotor = hardwareMap.dcMotor.get("frontRight");
-         backRightMotor = hardwareMap.dcMotor.get("backRight");
+        frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
+        backLeftMotor = hardwareMap.dcMotor.get("backLeft");
+        frontRightMotor = hardwareMap.dcMotor.get("frontRight");
+        backRightMotor = hardwareMap.dcMotor.get("backRight");
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -72,7 +72,6 @@ public class RedTeleOp extends LinearOpMode {
         lift.init(hardwareMap);
 
         april=new aprilthing();
-
         while (opModeIsActive()) {
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x;
@@ -122,14 +121,14 @@ public class RedTeleOp extends LinearOpMode {
             blocker.stopping(gamepad1.b);
 
             launch.launch(getDistance());
-
+            telemetry.update();
             telemetry.addData("mode",launch.state());
             telemetry.addData("state",launch.giveState());
-            telemetry.update();
             telemetry.addData("Speed",launch.showRPM());
-            updating();
             telemetry.addData("Distance: ",getDistance());
             telemetry.addData("limelight",limedistance());
+
+
 
             if(gamepad1.dpadLeftWasPressed())
             {
@@ -152,47 +151,49 @@ public class RedTeleOp extends LinearOpMode {
                 launch.settingState();
             }
 
-
-            if(gamepad1.leftBumperWasPressed())
+            if(gamepad1.left_bumper)
             {
                 LLResult llresult = limelight.getLatestResult();
+
                 if(llresult != null && llresult.isValid()&&getDistance()!=0) {
                     updating();
-                    double angle=20;
-                    telemetry.addData("angle",april.getAngle(llresult.getTy(),limedistance(),getDistance()));
-                    if (llresult.getTx() >  angle)
+                    llresult = limelight.getLatestResult();
+
+                    if (llresult.getTx() > 9)
                     {
-                        frontRightMotor.setPower(0.3);
-                        frontLeftMotor.setPower(-0.3);
-                        backLeftMotor.setPower(-0.3);
-                        backRightMotor.setPower(0.3);
+                        frontRightMotor.setPower(-0.4);
+                        frontLeftMotor.setPower(0.4);
+                        backLeftMotor.setPower(0.4);
+                        backRightMotor.setPower(-0.4);
                     }
-                    else if (llresult.getTx() < -angle)
+                    else if (llresult.getTx() < 7)
                     {
-                        frontRightMotor.setPower(-0.3);
-                        frontLeftMotor.setPower(0.3);
-                        backLeftMotor.setPower(0.3);
-                        backRightMotor.setPower(-0.3);
+                        frontRightMotor.setPower(0.4);
+                        frontLeftMotor.setPower(-0.4);
+                        backLeftMotor.setPower(-0.4);
+                        backRightMotor.setPower(0.4);
                     }
-                    while(!(llresult.getTx() <  angle&&llresult.getTx() > -angle))
-                    {updating();
-                        telemetry.addData("angle",april.getAngle(llresult.getTx(),limedistance(),april.getDistance(llresult.getTx(),limedistance())));
+
+                    while (llresult.getTx() > 9 || llresult.getTx() < 7) {
+                        llresult = limelight.getLatestResult();
+                        updating();
+                        telemetry.addData("TX", llresult.getTx());
+                        telemetry.update();
                     }
-                }
-                frontRightMotor.setPower(0);
-                frontLeftMotor.setPower(0);
-                backLeftMotor.setPower(0);
-                backRightMotor.setPower(0);
+                    gamepad1.rumble(100);
                 }
             }
-        telemetry.update();
+            updating();
+            telemetry.update();
+        }
     }
     public void updating() {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         limelight.updateRobotOrientation(orientation.getYaw());
         LLResult llresult = limelight.getLatestResult();
         if(llresult != null && llresult.isValid()) {
-            }
+
+        }
         else
         {
             telemetry.addData("lielight","no");

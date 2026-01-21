@@ -161,17 +161,17 @@ public class BlueTeleOp extends LinearOpMode {
 
                     if (llresult.getTx() > 7)
                     {
-                        frontRightMotor.setPower(-0.2);
-                        frontLeftMotor.setPower(0.2);
-                        backLeftMotor.setPower(0.2);
-                        backRightMotor.setPower(-0.2);
+                        frontRightMotor.setPower(-0.4);
+                        frontLeftMotor.setPower(0.4);
+                        backLeftMotor.setPower(0.4);
+                        backRightMotor.setPower(-0.4);
                     }
                     else if (llresult.getTx() < 5)
                     {
-                        frontRightMotor.setPower(0.2);
-                        frontLeftMotor.setPower(-0.2);
-                        backLeftMotor.setPower(-0.2);
-                        backRightMotor.setPower(0.2);
+                        frontRightMotor.setPower(0.4);
+                        frontLeftMotor.setPower(-0.4);
+                        backLeftMotor.setPower(-0.4);
+                        backRightMotor.setPower(0.4);
                     }
 
                     while (llresult.getTx() > 7 || llresult.getTx() < 5) {
@@ -180,6 +180,7 @@ public class BlueTeleOp extends LinearOpMode {
                         telemetry.addData("TX", llresult.getTx());
                         telemetry.update();
                     }
+                    gamepad1.rumble(100);
                 }
             }
             updating();
