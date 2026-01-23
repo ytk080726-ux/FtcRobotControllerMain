@@ -25,7 +25,7 @@ public class launching {
     {
         if(num==0) {
             if (distance == 0) {
-                tps = (0);
+                tps = (500);
             } else if (distance <= 1.3) {
                 tps = (1700);
             }
@@ -34,17 +34,19 @@ public class launching {
             }
             else if (distance > 1.6 && distance <= 2.5) {
                 tps = (2200);
-            } else if (distance > 2.5) {
-                tps = (4400);
-            } else {
-                tps = 0;
+            }
+            else if (distance > 2.5) {
+                tps = (5000);
+            }
+            else {
+                tps = 500;
             }
         }
         else if(num==1)
         {
             if(state==0)
             {
-                tps=0;
+                tps=500;
             } else if (state==1) {
                 tps=1700;
             }
@@ -54,10 +56,10 @@ public class launching {
             }
             else if(state==3)
             {
-                tps=3400;
+                tps=4800;
             }
             else {
-                tps=2200;
+                tps=500;
             }
         }
 

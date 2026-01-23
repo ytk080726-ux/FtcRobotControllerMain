@@ -180,7 +180,7 @@ public class BlueTeleOp extends LinearOpMode {
                         frontRightMotor.setPower(0.5);
                         frontLeftMotor.setPower(-0.5);
                         backLeftMotor.setPower(-0.5);
-                        backRightMotor.setPower(0.5);
+                        backRightMotor.setPower(0.5 );
                     }
                     frontRightMotor.setPower(0);
                     frontLeftMotor.setPower(0);
