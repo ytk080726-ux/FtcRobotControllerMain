@@ -19,8 +19,8 @@ public class RedTeleOp extends LinearOpMode {
     DcMotor backLeftMotor;
     DcMotor frontRightMotor;
     DcMotor backRightMotor;
-    private double targetX;
     aprilthing april;
+    private double targetX;
     IMU imu;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -73,6 +73,8 @@ public class RedTeleOp extends LinearOpMode {
         lift.init(hardwareMap);
 
         april=new aprilthing();
+
+
         while (opModeIsActive()) {
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x;
@@ -122,35 +124,13 @@ public class RedTeleOp extends LinearOpMode {
             blocker.stopping(gamepad1.b);
 
             launch.launch(getDistance());
+
             telemetry.update();
             telemetry.addData("mode",launch.state());
             telemetry.addData("state",launch.giveState());
             telemetry.addData("Speed",launch.showRPM());
             telemetry.addData("Distance: ",getDistance());
             telemetry.addData("limelight",limedistance());
-
-
-
-            if(gamepad1.dpadLeftWasPressed())
-            {
-                launch.decrease();
-            }
-            if(gamepad1.dpadRightWasPressed())
-            {
-                launch.increase();
-            }
-            if(gamepad1.left_trigger>0)
-            {
-                imu.resetYaw();
-            }
-            if(gamepad1.dpadUpWasPressed())
-            {
-                launch.setState();
-            }
-            if(gamepad1.rightBumperWasPressed())
-            {
-                launch.settingState();
-            }
 
             YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
             limelight.updateRobotOrientation(orientation.getYaw());
@@ -167,22 +147,43 @@ public class RedTeleOp extends LinearOpMode {
                 telemetry.addData("lielight","no");
             }
 
+            if(gamepad1.dpadLeftWasPressed())
+            {
+                launch.decrease();
+            }
+            if(gamepad1.dpadRightWasPressed())
+            {
+                launch.increase();
+            }
+            if(gamepad1.left_trigger > 0)
+            {
+                imu.resetYaw();
+            }
+            if(gamepad1.dpadUpWasPressed())
+            {
+                launch.setState();
+            }
+            if(gamepad1.rightBumperWasPressed())
+            {
+                launch.settingState();
+            }
+
             if(gamepad1.left_bumper)
             {
                 if(llresult != null && llresult.isValid()&&getDistance()!=0) {
-                    if (targetX > 6)
+                    if (targetX > 7)
                     {
                         frontRightMotor.setPower(-0.5);
                         frontLeftMotor.setPower(0.5);
                         backLeftMotor.setPower(0.5);
                         backRightMotor.setPower(-0.5);
                     }
-                    else if (targetX < 4)
+                    else if (targetX < 5)
                     {
                         frontRightMotor.setPower(0.5);
                         frontLeftMotor.setPower(-0.5);
                         backLeftMotor.setPower(-0.5);
-                        backRightMotor.setPower(0.5);
+                        backRightMotor.setPower(0.5 );
                     }
                     frontRightMotor.setPower(0);
                     frontLeftMotor.setPower(0);
@@ -198,6 +199,7 @@ public class RedTeleOp extends LinearOpMode {
         double up=0.745;
         double scale= 0;
         LLResult llresult = limelight.getLatestResult();
+
         if(llresult != null && llresult.isValid()) {
             double tx =llresult.getTx();
             scale=april.getDistance(tx,limedistance());

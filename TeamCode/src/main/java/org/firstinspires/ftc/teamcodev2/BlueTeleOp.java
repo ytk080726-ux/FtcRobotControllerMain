@@ -73,6 +73,8 @@ public class BlueTeleOp extends LinearOpMode {
         lift.init(hardwareMap);
 
         april=new aprilthing();
+
+
         while (opModeIsActive()) {
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x;
@@ -122,6 +124,7 @@ public class BlueTeleOp extends LinearOpMode {
             blocker.stopping(gamepad1.b);
 
             launch.launch(getDistance());
+
             telemetry.update();
             telemetry.addData("mode",launch.state());
             telemetry.addData("state",launch.giveState());
@@ -152,7 +155,7 @@ public class BlueTeleOp extends LinearOpMode {
             {
                 launch.increase();
             }
-            if(gamepad1.left_trigger>0)
+            if(gamepad1.left_trigger > 0)
             {
                 imu.resetYaw();
             }
@@ -196,6 +199,7 @@ public class BlueTeleOp extends LinearOpMode {
         double up=0.745;
         double scale= 0;
         LLResult llresult = limelight.getLatestResult();
+
         if(llresult != null && llresult.isValid()) {
             double tx =llresult.getTx();
             scale=april.getDistance(tx,limedistance());

@@ -9,6 +9,7 @@ public class launching {
     DcMotorEx left,right;
     int num,state;
     double tps;
+
     public void init(HardwareMap hw) {
         left = hw.get(DcMotorEx.class, "turretLeft");
         left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -26,7 +27,8 @@ public class launching {
         if(num==0) {
             if (distance == 0) {
                 tps = (500);
-            } else if (distance <= 1.3) {
+            }
+            else if (distance <= 1.3) {
                 tps = (1700);
             }
             else if (distance > 1.3 && distance <= 1.6) {
@@ -116,5 +118,10 @@ public class launching {
             else if(state==3)
                 state=0;
         }
+
+        public void auto(double tps) {
+            left.setVelocity(tps);
+            right.setVelocity(tps);
         }
+}
 
