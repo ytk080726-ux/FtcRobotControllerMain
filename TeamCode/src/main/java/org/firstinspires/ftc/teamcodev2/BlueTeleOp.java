@@ -193,6 +193,7 @@ public class BlueTeleOp extends LinearOpMode {
                 }
             }
             telemetry.update();
+
         }
     }
     public double getDistance() {

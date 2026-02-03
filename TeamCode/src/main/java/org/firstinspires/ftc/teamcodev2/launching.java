@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 public class launching {
     DcMotorEx left,right;
@@ -17,6 +18,9 @@ public class launching {
         right = hw.get(DcMotorEx.class, "turretRight");
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right.setDirection(DcMotorEx.Direction.REVERSE);
+        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(60,0,0,12.813);
+        left.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
+        right.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         num=0;
         tps =0;
         state=0;
@@ -88,6 +92,7 @@ public class launching {
         return tps;
     }
     public void increase()
+
         {
             if(tps<(6000))
             {
@@ -124,4 +129,6 @@ public class launching {
             right.setVelocity(tps);
         }
 }
+
+
 

@@ -102,7 +102,7 @@ public class FrontRedAuto__PreLoad extends LinearOpMode {
         backLeft.setPower(0.6);
         frontRight.setPower(0.3);
         frontLeft.setPower(0.6);
-        sleep(750);
+        sleep(900);
     }
 
     @Override
