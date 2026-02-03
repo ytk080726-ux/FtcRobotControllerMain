@@ -35,8 +35,11 @@ public class launching {
             else if (distance <= 1.3) {
                 tps = (1700);
             }
-            else if (distance > 1.3 && distance <= 1.6) {
+            else if (distance > 1.3 && distance <= 1.45) {
                 tps = (2000);
+            }
+            else if (distance > 1.45 && distance <= 1.6) {
+                tps = (2100);
             }
             else if (distance > 1.6 && distance <= 2.5) {
                 tps = (2200);
