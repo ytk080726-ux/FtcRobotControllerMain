@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 public class launching {
     DcMotorEx left,right;
@@ -27,16 +28,16 @@ public class launching {
             if (distance == 0) {
                 tps = (500);
             } else if (distance <= 1.3) {
-                tps = (1700);
+                tps = (1000);
             }
             else if (distance > 1.3 && distance <= 1.6) {
-                tps = (2000);
+                tps = (1350);
             }
             else if (distance > 1.6 && distance <= 2.5) {
-                tps = (2200);
+                tps = (1500);
             }
             else if (distance > 2.5) {
-                tps = (5000);
+                tps = (2000);
             }
             else {
                 tps = 500;

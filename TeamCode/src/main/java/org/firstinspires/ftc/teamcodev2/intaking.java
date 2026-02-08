@@ -41,6 +41,6 @@ public class intaking {
     }
     public void auto2()
     {
-        intake.setPower(1 );
+        intake.setPower(1);
     }
 }

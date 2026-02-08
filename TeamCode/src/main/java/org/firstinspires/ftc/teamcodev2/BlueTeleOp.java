@@ -69,8 +69,7 @@ public class BlueTeleOp extends LinearOpMode {
         launching launch = new launching();
         launch.init(hardwareMap);
 
-        lifting lift = new lifting();
-        lift.init(hardwareMap);
+
 
         april=new aprilthing();
         while (opModeIsActive()) {
@@ -212,7 +211,7 @@ public class BlueTeleOp extends LinearOpMode {
             Pose3D botPose = llresult.getBotpose();
             Object LimelightHelpers;
             double ty =llresult.getTy();
-            double first = (up - 0.277) / (Math.tan(Math.toRadians(20 + ty)));
+            double first = (up - 0.3) / (Math.tan(Math.toRadians(20 + ty)));
             scale=first;
             telemetry.addData("ty",ty);
         }

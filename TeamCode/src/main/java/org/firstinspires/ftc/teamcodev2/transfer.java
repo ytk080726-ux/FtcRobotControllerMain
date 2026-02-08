@@ -10,7 +10,7 @@ public class transfer {
     public void init(HardwareMap hw)
     {
         transfer= hw.get(DcMotor.class,"transfer");
-        transfer.setDirection(DcMotorSimple.Direction.FORWARD);
+        transfer.setDirection(DcMotorSimple.Direction.REVERSE);
         transfer.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         toggle=true;
     }
@@ -18,7 +18,7 @@ public class transfer {
     public void start() {
         if (toggle)
         {
-            transfer.setPower(0.035);
+            transfer.setPower(0.03);
         }
         else
         {

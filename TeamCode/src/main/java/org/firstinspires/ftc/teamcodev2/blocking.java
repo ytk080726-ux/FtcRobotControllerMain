@@ -18,11 +18,11 @@ public class blocking {
     {
         if(state)
         {
-            block.setPosition(0.4);
+            block.setPosition(0.2);
         }
         else
         {
-            block.setPosition(0.20);
+            block.setPosition(0.4);
         }
     }
 }

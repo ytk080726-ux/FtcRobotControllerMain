@@ -11,20 +11,15 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class testing extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        DcMotorEx flywheelLeft = hardwareMap.get(DcMotorEx.class,"1");
-        DcMotorEx flywheelRight = hardwareMap.get(DcMotorEx.class,"2");
-
-        flywheelLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        flywheelLeft.setDirection(DcMotorEx.Direction.FORWARD);
-        flywheelRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        flywheelRight.setDirection(DcMotorEx.Direction.REVERSE);
-
-
-
-        while(true) {
-            flywheelRight.setVelocity(2200);
-            flywheelLeft.setVelocity(2200);
+        DcMotorEx left = hardwareMap.get(DcMotorEx.class, "turretLeft");
+        left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        left.setDirection(DcMotorEx.Direction.FORWARD);
+        DcMotorEx right = hardwareMap.get(DcMotorEx.class, "turretRight");
+        right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        right.setDirection(DcMotorEx.Direction.REVERSE);
+        while(true)
+        {
+            left.setVelocity(100);
         }
-
     }
 }
