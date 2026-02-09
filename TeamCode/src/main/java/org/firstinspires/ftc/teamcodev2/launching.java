@@ -18,7 +18,7 @@ public class launching {
         right = hw.get(DcMotorEx.class, "turretRight");
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right.setDirection(DcMotorEx.Direction.REVERSE);
-        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(60,0,0,12.813);
+        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(60,0,0,12.823);
         left.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         right.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         num=0;

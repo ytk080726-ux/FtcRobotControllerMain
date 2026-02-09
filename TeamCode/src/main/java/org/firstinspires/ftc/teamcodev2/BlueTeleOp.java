@@ -69,8 +69,7 @@ public class BlueTeleOp extends LinearOpMode {
         launching launch = new launching();
         launch.init(hardwareMap);
 
-        lifting lift = new lifting();
-        lift.init(hardwareMap);
+
 
         april=new aprilthing();
 
