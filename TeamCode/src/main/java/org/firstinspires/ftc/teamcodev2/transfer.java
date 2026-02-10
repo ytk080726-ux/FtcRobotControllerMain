@@ -18,7 +18,7 @@ public class transfer {
     public void start() {
         if (toggle)
         {
-            transfer.setPower(0.035);
+            transfer.setPower(0.03);
         }
         else
         {

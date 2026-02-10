@@ -103,10 +103,10 @@ public class BlueTeleOp extends LinearOpMode {
             double frontRightPower = (rotY - rotX - rx) / denominator;
             double backRightPower = (rotY + rotX - rx) / denominator;
 
-            frontLeftMotor.setPower(frontLeftPower);
-            backLeftMotor.setPower(backLeftPower);
-            frontRightMotor.setPower(frontRightPower);
-            backRightMotor.setPower(backRightPower);
+            frontLeftMotor.setPower(frontLeftPower * 0.9);
+            backLeftMotor.setPower(backLeftPower * 0.9);
+            frontRightMotor.setPower(frontRightPower * 0.9);
+            backRightMotor.setPower(backRightPower * 0.9);
 
             if (gamepad1.aWasPressed()) {
                 intake.type();

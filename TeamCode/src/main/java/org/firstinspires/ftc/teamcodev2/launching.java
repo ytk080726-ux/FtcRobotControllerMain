@@ -18,7 +18,7 @@ public class launching {
         right = hw.get(DcMotorEx.class, "turretRight");
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right.setDirection(DcMotorEx.Direction.REVERSE);
-        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(60,0,0,12.823);
+        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(60,0,0,12.129);
         left.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         right.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         num=0;
@@ -32,21 +32,20 @@ public class launching {
             if (distance == 0) {
                 tps = (500);
             }
-            else if (distance <= 1.3) {
-                tps = (1700);
+            else if (distance > 1.2 && distance <= 1.4) {
+                tps = (1130);
             }
-            else if (distance > 1.3 && distance <= 1.45) {
-                tps = (2000);
+            else if (distance > 1.4 && distance <= 1.6) {
+                tps = (1170);
             }
-            else if (distance > 1.45 && distance <= 1.6) {
-                tps = (2100);
-
+            else if (distance > 1.6 && distance <= 1.8) {
+                tps = (1220);
             }
-            else if (distance > 1.6 && distance <= 2.5) {
-                tps = (2200);
+            else if (distance > 1.8 && distance <= 2.0) {
+                tps = (1270);
             }
-            else if (distance > 2.5) {
-                tps = (5000);
+            else if (distance > 2.0) {
+                tps = (2500);
             }
             else {
                 tps = 500;
