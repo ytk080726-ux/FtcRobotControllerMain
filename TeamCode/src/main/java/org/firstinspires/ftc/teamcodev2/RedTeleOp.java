@@ -166,6 +166,10 @@ public class RedTeleOp extends LinearOpMode {
             {
                 telemetry.addData("lielight","no");
             }
+            if(gamepad1.right_trigger>0)
+            {
+                speed();
+            }
 
             if(gamepad1.left_bumper)
             {
