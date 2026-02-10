@@ -19,8 +19,9 @@ public class RedTeleOp extends LinearOpMode {
     DcMotor backLeftMotor;
     DcMotor frontRightMotor;
     DcMotor backRightMotor;
-    aprilthing april;
     private double targetX;
+    aprilthing april;
+    double denominator;
     IMU imu;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -69,11 +70,10 @@ public class RedTeleOp extends LinearOpMode {
         launching launch = new launching();
         launch.init(hardwareMap);
 
+        denominator = 0.8;
 
 
         april=new aprilthing();
-
-
         while (opModeIsActive()) {
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x;
@@ -97,16 +97,15 @@ public class RedTeleOp extends LinearOpMode {
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio,
             // but only if at least one is out of the range [-1, 1]
-            double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
             double frontLeftPower = (rotY + rotX + rx) / denominator;
             double backLeftPower = (rotY - rotX + rx) / denominator;
             double frontRightPower = (rotY - rotX - rx) / denominator;
             double backRightPower = (rotY + rotX - rx) / denominator;
 
-            frontLeftMotor.setPower(frontLeftPower * 0.9);
-            backLeftMotor.setPower(backLeftPower * 0.9);
-            frontRightMotor.setPower(frontRightPower * 0.9);
-            backRightMotor.setPower(backRightPower * 0.9);
+            frontLeftMotor.setPower(frontLeftPower);
+            backLeftMotor.setPower(backLeftPower);
+            frontRightMotor.setPower(frontRightPower);
+            backRightMotor.setPower(backRightPower);
 
             if (gamepad1.aWasPressed()) {
                 intake.type();
@@ -123,13 +122,35 @@ public class RedTeleOp extends LinearOpMode {
             blocker.stopping(gamepad1.b);
 
             launch.launch(getDistance());
-
             telemetry.update();
             telemetry.addData("mode",launch.state());
             telemetry.addData("state",launch.giveState());
             telemetry.addData("Speed",launch.showRPM());
             telemetry.addData("Distance: ",getDistance());
             telemetry.addData("limelight",limedistance());
+
+
+
+            if(gamepad1.dpadLeftWasPressed())
+            {
+                launch.decrease();
+            }
+            if(gamepad1.dpadRightWasPressed())
+            {
+                launch.increase();
+            }
+            if(gamepad1.left_trigger>0)
+            {
+                imu.resetYaw();
+            }
+            if(gamepad1.dpadUpWasPressed())
+            {
+                launch.setState();
+            }
+            if(gamepad1.rightBumperWasPressed())
+            {
+                launch.settingState();
+            }
 
             YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
             limelight.updateRobotOrientation(orientation.getYaw());
@@ -146,43 +167,22 @@ public class RedTeleOp extends LinearOpMode {
                 telemetry.addData("lielight","no");
             }
 
-            if(gamepad1.dpadLeftWasPressed())
-            {
-                launch.decrease();
-            }
-            if(gamepad1.dpadRightWasPressed())
-            {
-                launch.increase();
-            }
-            if(gamepad1.left_trigger > 0)
-            {
-                imu.resetYaw();
-            }
-            if(gamepad1.dpadUpWasPressed())
-            {
-                launch.setState();
-            }
-            if(gamepad1.rightBumperWasPressed())
-            {
-                launch.settingState();
-            }
-
             if(gamepad1.left_bumper)
             {
                 if(llresult != null && llresult.isValid()&&getDistance()!=0) {
-                    if (targetX > 7)
+                    if (targetX > 6)
                     {
                         frontRightMotor.setPower(-0.5);
                         frontLeftMotor.setPower(0.5);
                         backLeftMotor.setPower(0.5);
                         backRightMotor.setPower(-0.5);
                     }
-                    else if (targetX < 5)
+                    else if (targetX < 4)
                     {
                         frontRightMotor.setPower(0.5);
                         frontLeftMotor.setPower(-0.5);
                         backLeftMotor.setPower(-0.5);
-                        backRightMotor.setPower(0.5 );
+                        backRightMotor.setPower(0.5);
                     }
                     frontRightMotor.setPower(0);
                     frontLeftMotor.setPower(0);
@@ -198,7 +198,6 @@ public class RedTeleOp extends LinearOpMode {
         double up=0.745;
         double scale= 0;
         LLResult llresult = limelight.getLatestResult();
-
         if(llresult != null && llresult.isValid()) {
             double tx =llresult.getTx();
             scale=april.getDistance(tx,limedistance());
@@ -215,10 +214,18 @@ public class RedTeleOp extends LinearOpMode {
             Pose3D botPose = llresult.getBotpose();
             Object LimelightHelpers;
             double ty =llresult.getTy();
-            double first = (up - 0.277) / (Math.tan(Math.toRadians(20 + ty)));
+            double first = (up - 0.3) / (Math.tan(Math.toRadians(20 + ty)));
             scale=first;
             telemetry.addData("ty",ty);
         }
         return (scale);
+    }
+    private void speed()
+    {
+        if(denominator==0.8) {
+            denominator = 1.5;
+        } else if (denominator==1.5) {
+            denominator=0.8;
+        }
     }
 }
