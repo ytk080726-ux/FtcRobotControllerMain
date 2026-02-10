@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcodev2.pedroPathing;
 
 import static org.firstinspires.ftc.teamcodev2.pedroPathing.Tuning.changes;
@@ -330,7 +331,7 @@ class TurnTuner extends OpMode {
  */
 class ForwardVelocityTuner extends OpMode {
     private final ArrayList<Double> velocities = new ArrayList<>();
-    public static double DISTANCE = 48;
+    public static double DISTANCE = 12;
     public static double RECORD_NUMBER = 10;
 
     private boolean end;

@@ -10,6 +10,7 @@ public class launching {
     DcMotorEx left,right;
     int num,state;
     double tps;
+
     public void init(HardwareMap hw) {
         left = hw.get(DcMotorEx.class, "turretLeft");
         left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -17,6 +18,9 @@ public class launching {
         right = hw.get(DcMotorEx.class, "turretRight");
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right.setDirection(DcMotorEx.Direction.REVERSE);
+        PIDFCoefficients pidfCoefficients = new PIDFCoefficients(60,0,0,12.129);
+        left.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
+        right.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfCoefficients);
         num=0;
         tps =0;
         state=0;
@@ -27,17 +31,21 @@ public class launching {
         if(num==0) {
             if (distance == 0) {
                 tps = (500);
-            } else if (distance <= 1.3) {
-                tps = (1000);
             }
-            else if (distance > 1.3 && distance <= 1.6) {
-                tps = (1350);
+            else if (distance > 1.2 && distance <= 1.4) {
+                tps = (1130);
             }
-            else if (distance > 1.6 && distance <= 2.5) {
-                tps = (1500);
+            else if (distance > 1.4 && distance <= 1.6) {
+                tps = (1170);
             }
-            else if (distance > 2.5) {
-                tps = (2000);
+            else if (distance > 1.6 && distance <= 1.8) {
+                tps = (1220);
+            }
+            else if (distance > 1.8 && distance <= 2.0) {
+                tps = (1270);
+            }
+            else if (distance > 2.0) {
+                tps = (2500);
             }
             else {
                 tps = 500;
@@ -87,6 +95,7 @@ public class launching {
         return tps;
     }
     public void increase()
+
         {
             if(tps<(6000))
             {
@@ -117,5 +126,12 @@ public class launching {
             else if(state==3)
                 state=0;
         }
+
+        public void auto(double tps) {
+            left.setVelocity(tps);
+            right.setVelocity(tps);
         }
+}
+
+
 

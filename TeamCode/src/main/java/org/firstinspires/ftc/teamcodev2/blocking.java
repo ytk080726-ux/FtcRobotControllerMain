@@ -22,7 +22,7 @@ public class blocking {
         }
         else
         {
-            block.setPosition(0.4);
+            block.setPosition(0.40);
         }
     }
 }
