@@ -21,6 +21,7 @@ public class BlueTeleOp extends LinearOpMode {
     DcMotor backRightMotor;
     aprilthing april;
     private double targetX;
+    double denominator;
     IMU imu;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -68,6 +69,7 @@ public class BlueTeleOp extends LinearOpMode {
 
         launching launch = new launching();
         launch.init(hardwareMap);
+        denominator = 0.8;
 
 
 
@@ -95,7 +97,6 @@ public class BlueTeleOp extends LinearOpMode {
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio,
             // but only if at least one is out of the range [-1, 1]
-            double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
             double frontLeftPower = (rotY + rotX + rx) / denominator;
             double backLeftPower = (rotY - rotX + rx) / denominator;
             double frontRightPower = (rotY - rotX - rx) / denominator;
@@ -163,6 +164,10 @@ public class BlueTeleOp extends LinearOpMode {
             {
                 launch.settingState();
             }
+            if(gamepad1.right_trigger>0)
+            {
+                speed();
+            }
 
             if(gamepad1.left_bumper)
             {
@@ -216,5 +221,13 @@ public class BlueTeleOp extends LinearOpMode {
             telemetry.addData("ty",ty);
         }
         return (scale);
+    }
+    private void speed()
+    {
+        if(denominator==0.8) {
+            denominator = 1.5;
+        } else if (denominator==1.5) {
+            denominator=0.8;
+        }
     }
 }
