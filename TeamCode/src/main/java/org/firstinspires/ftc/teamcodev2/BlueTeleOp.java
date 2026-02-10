@@ -20,6 +20,7 @@ public class BlueTeleOp extends LinearOpMode {
     DcMotor frontRightMotor;
     DcMotor backRightMotor;
     aprilthing april;
+    double denominator;
     private double targetX;
     IMU imu;
     @Override
@@ -221,5 +222,14 @@ public class BlueTeleOp extends LinearOpMode {
             telemetry.addData("ty",ty);
         }
         return (scale);
+    }
+
+    private void speed()
+    {
+        if(denominator==0.8) {
+            denominator = 1.5;
+        } else if (denominator==1.5) {
+            denominator=0.8;
+        }
     }
 }
