@@ -178,17 +178,17 @@ public class BlueTeleOp extends LinearOpMode {
                 if(llresult != null && llresult.isValid()&&getDistance()!=0) {
                     if (targetX > 6)
                     {
-                        frontRightMotor.setPower(-0.3);
-                        frontLeftMotor.setPower(0.3);
-                        backLeftMotor.setPower(0.3);
-                        backRightMotor.setPower(-0.3);
+                        frontRightMotor.setPower(-0.35);
+                        frontLeftMotor.setPower(0.35);
+                        backLeftMotor.setPower(0.35);
+                        backRightMotor.setPower(-0.35);
                     }
                     else if (targetX < 2.5)
                     {
-                        frontRightMotor.setPower(0.3);
-                        frontLeftMotor.setPower(-0.3);
-                        backLeftMotor.setPower(-0.3);
-                        backRightMotor.setPower(0.3);
+                        frontRightMotor.setPower(0.35);
+                        frontLeftMotor.setPower(-0.35);
+                        backLeftMotor.setPower(-0.35);
+                        backRightMotor.setPower(0.35);
                     }
                     else {
                         frontRightMotor.setPower(0);
@@ -224,7 +224,7 @@ public class BlueTeleOp extends LinearOpMode {
             Pose3D botPose = llresult.getBotpose();
             Object LimelightHelpers;
             double ty =llresult.getTy();
-            double first = (up - 0.277) / (Math.tan(Math.toRadians(20 + ty)));
+            double first = (up - 0.3) / (Math.tan(Math.toRadians(20 + ty)));
             scale=first;
             telemetry.addData("ty",ty);
         }

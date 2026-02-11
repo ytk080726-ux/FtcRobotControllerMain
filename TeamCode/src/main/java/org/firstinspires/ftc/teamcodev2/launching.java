@@ -52,7 +52,7 @@ public class launching {
             {
                 tps=500;
             }            else if (distance > 2.8) {
-                tps = (1920);
+                tps = (1925);
             }
         }
         else if(num==1)
