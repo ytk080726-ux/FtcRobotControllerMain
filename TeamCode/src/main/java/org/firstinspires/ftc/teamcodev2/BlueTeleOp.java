@@ -170,29 +170,33 @@ public class BlueTeleOp extends LinearOpMode {
             {
                 speed();
             }
+            telemetry.addData("speed",denominator);
+
 
             if(gamepad1.left_bumper)
             {
                 if(llresult != null && llresult.isValid()&&getDistance()!=0) {
-                    if (targetX > 7)
+                    if (targetX > 6)
                     {
-                        frontRightMotor.setPower(-0.5);
-                        frontLeftMotor.setPower(0.5);
-                        backLeftMotor.setPower(0.5);
-                        backRightMotor.setPower(-0.5);
+                        frontRightMotor.setPower(-0.3);
+                        frontLeftMotor.setPower(0.3);
+                        backLeftMotor.setPower(0.3);
+                        backRightMotor.setPower(-0.3);
                     }
-                    else if (targetX < 5)
+                    else if (targetX < 2.5)
                     {
-                        frontRightMotor.setPower(0.5);
-                        frontLeftMotor.setPower(-0.5);
-                        backLeftMotor.setPower(-0.5);
-                        backRightMotor.setPower(0.5 );
+                        frontRightMotor.setPower(0.3);
+                        frontLeftMotor.setPower(-0.3);
+                        backLeftMotor.setPower(-0.3);
+                        backRightMotor.setPower(0.3);
                     }
-                    frontRightMotor.setPower(0);
-                    frontLeftMotor.setPower(0);
-                    backLeftMotor.setPower(0);
-                    backRightMotor.setPower(0);
-                    gamepad1.rumble(100);
+                    else {
+                        frontRightMotor.setPower(0);
+                        frontLeftMotor.setPower(0);
+                        backLeftMotor.setPower(0);
+                        backRightMotor.setPower(0);
+                        gamepad1.rumble(100);
+                    }
                 }
             }
             telemetry.update();
@@ -230,8 +234,8 @@ public class BlueTeleOp extends LinearOpMode {
     private void speed()
     {
         if(denominator==0.8) {
-            denominator = 1.5;
-        } else if (denominator==1.5) {
+            denominator = 2.5;
+        } else if (denominator==2.5) {
             denominator=0.8;
         }
     }

@@ -29,26 +29,30 @@ public class launching {
     public void launch(double distance)
     {
         if(num==0) {
-            if (distance == 0) {
-                tps = (500);
+            if(distance>0&&distance<1.2)
+            {
+                tps=500;
             }
             else if (distance > 1.2 && distance <= 1.4) {
-                tps = (1130);
+                tps = (1180);
             }
             else if (distance > 1.4 && distance <= 1.6) {
-                tps = (1170);
-            }
-            else if (distance > 1.6 && distance <= 1.8) {
                 tps = (1220);
             }
-            else if (distance > 1.8 && distance <= 2.0) {
+            else if (distance > 1.6 && distance <= 1.8) {
                 tps = (1270);
             }
-            else if (distance > 2.0) {
-                tps = (2500);
+            else if (distance > 1.8 && distance <= 2.0) {
+                tps = (1320);
             }
-            else {
-                tps = 500;
+            else if (distance > 2.0 && distance <= 2.2) {
+                tps = (1400);
+            }
+            else if(distance>2.2&&distance<=2.8)
+            {
+                tps=500;
+            }            else if (distance > 2.8) {
+                tps = (1920);
             }
         }
         else if(num==1)
@@ -57,15 +61,27 @@ public class launching {
             {
                 tps=500;
             } else if (state==1) {
-                tps=1700;
+                tps=1180;
             }
             else if(state==2)
             {
-                tps=2100;
+                tps=1220;
             }
             else if(state==3)
             {
-                tps=4800;
+                tps=1270;
+            }
+            else if(state==4)
+            {
+                tps = (1320);
+            }
+            else if(state==5)
+            {
+                tps = (1400);
+            }
+            else if(state==6)
+            {
+                tps = (1800);
             }
             else {
                 tps=500;
@@ -124,6 +140,12 @@ public class launching {
             else if(state==2)
                 state=3;
             else if(state==3)
+                state=4;
+            else if(state==4)
+                state=5;
+            else if(state==5)
+                state=6;
+            else if(state==6)
                 state=0;
         }
 

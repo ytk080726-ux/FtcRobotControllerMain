@@ -170,29 +170,31 @@ public class RedTeleOp extends LinearOpMode {
             {
                 speed();
             }
+            telemetry.addData("speed",denominator);
 
             if(gamepad1.left_bumper)
             {
                 if(llresult != null && llresult.isValid()&&getDistance()!=0) {
-                    if (targetX > 6)
+                    if (targetX > 7)
                     {
-                        frontRightMotor.setPower(-0.5);
-                        frontLeftMotor.setPower(0.5);
-                        backLeftMotor.setPower(0.5);
-                        backRightMotor.setPower(-0.5);
+                        frontRightMotor.setPower(-0.4);
+                        frontLeftMotor.setPower(0.4);
+                        backLeftMotor.setPower(0.4);
+                        backRightMotor.setPower(-0.4);
                     }
-                    else if (targetX < 4)
+                    else if (targetX < 5)
                     {
-                        frontRightMotor.setPower(0.5);
-                        frontLeftMotor.setPower(-0.5);
-                        backLeftMotor.setPower(-0.5);
-                        backRightMotor.setPower(0.5);
+                        frontRightMotor.setPower(0.4);
+                        frontLeftMotor.setPower(-0.4);
+                        backLeftMotor.setPower(-0.4);
+                        backRightMotor.setPower(0.4);
+                    }else {
+                        frontRightMotor.setPower(0);
+                        frontLeftMotor.setPower(0);
+                        backLeftMotor.setPower(0);
+                        backRightMotor.setPower(0);
+                        gamepad1.rumble(100);
                     }
-                    frontRightMotor.setPower(0);
-                    frontLeftMotor.setPower(0);
-                    backLeftMotor.setPower(0);
-                    backRightMotor.setPower(0);
-                    gamepad1.rumble(100);
                 }
             }
             telemetry.update();
@@ -227,8 +229,8 @@ public class RedTeleOp extends LinearOpMode {
     private void speed()
     {
         if(denominator==0.8) {
-            denominator = 1.5;
-        } else if (denominator==1.5) {
+            denominator = 2.5;
+        } else if (denominator==2.5) {
             denominator=0.8;
         }
     }
