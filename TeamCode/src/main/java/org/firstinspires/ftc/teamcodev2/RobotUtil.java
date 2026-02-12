@@ -32,7 +32,7 @@ public class RobotUtil {
 
 
 
-    public void maping() {
+    public void maping(HardwareMap hardwareMap) {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(9);
         limelight.setPollRateHz(100); // This sets how often we ask Limelight for data (100 times per second)

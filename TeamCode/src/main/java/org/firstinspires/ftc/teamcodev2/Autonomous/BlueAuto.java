@@ -117,10 +117,12 @@ public class BlueAuto extends OpMode{
         pathTimer = new Timer();
         opModeTimer = new Timer();
         follower = Constants.createFollower(hardwareMap);
-        double limedistance = robotUtil.limedistance();
-        robotUtil.maping();
+        robotUtil=new RobotUtil();
+        intake=new intaking();
+        robotUtil.maping(hardwareMap);
+        double distance = robotUtil.limedistance();
         // add in other init mechanisms
-
+        intake.init(hardwareMap);
         buildPaths();
         follower.setPose(startPose);
 
