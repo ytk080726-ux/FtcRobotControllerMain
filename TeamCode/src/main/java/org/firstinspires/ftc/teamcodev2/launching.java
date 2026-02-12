@@ -29,30 +29,28 @@ public class launching {
     public void launch(double distance)
     {
         if(num==0) {
-            if(distance>0&&distance<1.2)
-            {
-                tps=500;
+
+            if (distance > 0.7 && distance <= 1.2){
+                tps = 1150;
             }
             else if (distance > 1.2 && distance <= 1.4) {
-                tps = (1180);
+                tps = (1200);
             }
             else if (distance > 1.4 && distance <= 1.6) {
-                tps = (1220);
+                tps = (1225);
             }
             else if (distance > 1.6 && distance <= 1.8) {
-                tps = (1270);
+                tps = (1300);
             }
             else if (distance > 1.8 && distance <= 2.0) {
-                tps = (1320);
+                tps = (1350);
             }
             else if (distance > 2.0 && distance <= 2.2) {
-                tps = (1400);
+                tps = (1500);
             }
-            else if(distance>2.2&&distance<=2.8)
-            {
-                tps=500;
-            }            else if (distance > 2.8) {
-                tps = (1925);
+
+            else if (distance > 2.7) {
+                tps = (1775);
             }
         }
         else if(num==1)

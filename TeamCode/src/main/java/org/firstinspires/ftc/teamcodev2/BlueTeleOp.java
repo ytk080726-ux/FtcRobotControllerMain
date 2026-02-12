@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcodev2;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -23,8 +24,9 @@ public class BlueTeleOp extends LinearOpMode {
     double denominator;
     private double targetX;
     IMU imu;
+
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(9);
         limelight.setPollRateHz(100); // This sets how often we ask Limelight for data (100 times per second)
@@ -239,4 +241,5 @@ public class BlueTeleOp extends LinearOpMode {
             denominator=0.8;
         }
     }
+
 }

@@ -175,19 +175,19 @@ public class RedTeleOp extends LinearOpMode {
             if(gamepad1.left_bumper)
             {
                 if(llresult != null && llresult.isValid()&&getDistance()!=0) {
-                    if (targetX > 7)
+                    if (targetX > 3.5)
                     {
-                        frontRightMotor.setPower(-0.4);
-                        frontLeftMotor.setPower(0.4);
-                        backLeftMotor.setPower(0.4);
-                        backRightMotor.setPower(-0.4);
+                        frontRightMotor.setPower(-0.35);
+                        frontLeftMotor.setPower(0.35);
+                        backLeftMotor.setPower(0.35);
+                        backRightMotor.setPower(-0.35);
                     }
-                    else if (targetX < 5)
+                    else if (targetX < 2)
                     {
-                        frontRightMotor.setPower(0.4);
-                        frontLeftMotor.setPower(-0.4);
-                        backLeftMotor.setPower(-0.4);
-                        backRightMotor.setPower(0.4);
+                        frontRightMotor.setPower(0.35);
+                        frontLeftMotor.setPower(-0.35);
+                        backLeftMotor.setPower(-0.35);
+                        backRightMotor.setPower(0.35);
                     }else {
                         frontRightMotor.setPower(0);
                         frontLeftMotor.setPower(0);
