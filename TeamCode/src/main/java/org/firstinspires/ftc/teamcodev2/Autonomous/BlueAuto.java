@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcodev2.Autonomous;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
+import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -31,22 +32,36 @@ public class BlueAuto extends OpMode{
         DRIVE_STARTPOS_SHOOT_POS,
 
         SHOOT_PRELOAD,
+        REPOSE,
 
         DRIVE_SHOOTPOS_COLLECT_POS,
 
-        DRIVE_SHOOTPOS
+        DRIVE_SHOOTPOS,
+        ALIGN_SET_TWO,
+        COLLECT_SET_TWO,
+        SHOOT_SET_TWO,
+
+        ALIGN_SET_THREE,
+        COLLECT_SET_THREE,
+        SHOOT_SET_THREE
     }
 
     PathState pathState;
 
-    private final Pose startPose = new Pose(21.259668508287287,123.09392265193372, Math.toRadians(143));
-    private final Pose shoot = new Pose(58.9171270718232, 84.5303867403315, Math.toRadians(143));
+    private final Pose startPose = new Pose(21.259668508287287,123.09392265193372, Math.toRadians(135));
+    private final Pose shoot = new Pose(58.9171270718232, 84.5303867403315, Math.toRadians(135));
+    private final Pose repose = new Pose(58.8171270718232, 84.6303867403315, Math.toRadians(180));
 
-    private final Pose collect = new Pose(17.596685082872927, 84.12707182320442, Math.toRadians(180));
+    private final Pose collect = new Pose(14.596685082872927, 84.12707182320442, Math.toRadians(180));
 
-    private final Pose shoot2 = new Pose(17.596685082872927, 84.12707182320442, Math.toRadians(0));
+    private final Pose alignSetTwo = new Pose(58.91712707182321, 60.17127071823206, Math.toRadians(180));
+    private final Pose collectSetTwo = new Pose(8.966850828729285, 59.45303867403314, Math.toRadians(180));
 
-    private PathChain driveStartPosShootPos, driveShootPosCollectPos, driveShootPos;
+    private final Pose alignSetThree = new Pose(57.37569060773482, 36.359116022099464, Math.toRadians(180));
+    private final Pose collectSetThree = new Pose(4.740331491712707, 35.624309392265204, Math.toRadians(180));
+
+    private final Pose leaveShoot = new Pose(51.0828729281768, 114.08839779005521, Math.toRadians(150));
+    private PathChain driveStartPosShootPos, reposition, driveShootPosCollectPos, driveShootPos, alignSetTwoPos, collectSetTwoPos, shootSetTwo, alignSetThreePos, collectSetThreePos, shootSetThree;
 
 
     public void buildPaths() {
@@ -56,48 +71,211 @@ public class BlueAuto extends OpMode{
                 .setLinearHeadingInterpolation(startPose.getHeading(), shoot.getHeading())
                 .build();
 
+        reposition = follower.pathBuilder()
+                .addPath(new BezierLine(shoot, repose))
+                .setLinearHeadingInterpolation(shoot.getHeading(), repose.getHeading())
+                .build();
+
         driveShootPosCollectPos = follower.pathBuilder()
-                .addPath(new BezierLine(shoot, collect))
-                .setLinearHeadingInterpolation(shoot.getHeading(), collect.getHeading())
+                .addPath(new BezierLine(repose, collect))
+                .setLinearHeadingInterpolation(repose.getHeading(), collect.getHeading())
                 .build();
 
         driveShootPos = follower.pathBuilder()
-                .addPath(new BezierLine(collect, shoot2))
-                .setLinearHeadingInterpolation(collect.getHeading(), shoot2.getHeading())
+                .addPath(new BezierLine(collect, shoot))
+                .setLinearHeadingInterpolation(collect.getHeading(), shoot.getHeading())
+                .build();
+
+        alignSetTwoPos = follower.pathBuilder()
+                .addPath(new BezierLine(shoot, alignSetTwo))
+                .setLinearHeadingInterpolation(shoot.getHeading(), alignSetTwo.getHeading())
+                .build();
+
+        collectSetTwoPos = follower.pathBuilder()
+                .addPath(new BezierLine(alignSetTwo, collectSetTwo))
+                .setLinearHeadingInterpolation(alignSetTwo.getHeading(), collectSetTwo.getHeading())
+                .build();
+
+        shootSetTwo = follower.pathBuilder()
+                .addPath(new BezierLine(collectSetTwo, shoot))
+                .setLinearHeadingInterpolation(collectSetTwo.getHeading(), shoot.getHeading())
+                .build();
+
+        alignSetThreePos = follower.pathBuilder()
+                .addPath(new BezierLine(shoot, alignSetThree))
+                .setLinearHeadingInterpolation(shoot.getHeading(), alignSetThree.getHeading())
+                .build();
+
+        collectSetThreePos = follower.pathBuilder()
+                .addPath(new BezierLine(alignSetThree, collectSetThree))
+                .setLinearHeadingInterpolation(alignSetThree.getHeading(), collectSetThree.getHeading())
+                .build();
+
+        shootSetThree = follower.pathBuilder()
+                .addPath(new BezierLine(collectSetThree, leaveShoot))
+                .setLinearHeadingInterpolation(collectSetThree.getHeading(), leaveShoot.getHeading())
                 .build();
     }
 
     public void statePathUpdate() {
         switch(pathState) {
             case DRIVE_STARTPOS_SHOOT_POS:
+                robotUtil.baseValues();
                 follower.followPath(driveStartPosShootPos, true);
                 setPathState(PathState.SHOOT_PRELOAD); // reset timer & make new state
                 break;
             case SHOOT_PRELOAD:
-                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5) {
+                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1) {
                     // ADD FLYWHEEL LOGIC
-                    robotUtil.shoot();
 
-                    follower.followPath(driveShootPosCollectPos, true);
+                    if (pathTimer.getElapsedTimeSeconds() < 2) {
+                        robotUtil.limedistance();
+                        robotUtil.getDistance();
+                        robotUtil.shoot();
+                    }
+
+                    if (pathTimer.getElapsedTimeSeconds() < 2.5){
+                        robotUtil.launch();
+                    }
+                    else if (pathTimer.getElapsedTimeSeconds() < 4.5){
+                        robotUtil.block(true);
+                    }
+                    else if (pathTimer.getElapsedTimeSeconds() < 5){
+                        robotUtil.block(false);
+                    }
+                    else {
+                        follower.followPath(reposition, true);
+                        setPathState(PathState.REPOSE);
+                    }
+
+                }
+                break;
+
+            case REPOSE:
+                if (!follower.isBusy()) {
+                    follower.followPath(driveShootPosCollectPos);
                     setPathState(PathState.DRIVE_SHOOTPOS_COLLECT_POS);
                 }
                 break;
             case DRIVE_SHOOTPOS_COLLECT_POS:
                 if (!follower.isBusy()) {
                     // ADD INTAKE LOGIC
-                    intake.auto2();
-
+                    robotUtil.baseValues();
                     follower.followPath(driveShootPos, true);
                     setPathState(PathState.DRIVE_SHOOTPOS);
                 }
                 break;
             case DRIVE_SHOOTPOS:
-                if (!follower.isBusy()) {
+                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1) {
                     // ADD FLYWHEEL LOGIC
+                    if(pathTimer.getElapsedTimeSeconds() < 2){
+                    robotUtil.limedistance();
+                    robotUtil.getDistance();
                     robotUtil.shoot();
+                    }
 
-                    telemetry.addLine("Done all paths");
+                    if (pathTimer.getElapsedTimeSeconds() < 3.5){
+                        robotUtil.launch();
+                    }
+                    else if (pathTimer.getElapsedTimeSeconds() < 4.5){
+                        robotUtil.block(true);
+                    }
+                    else if (pathTimer.getElapsedTimeSeconds() < 5){
+                        robotUtil.block(false);
+
+                    }
+                    else {
+                        follower.followPath(alignSetTwoPos, true);
+                        setPathState(PathState.ALIGN_SET_TWO);
+                    }
+
+
                 }
+                break;
+
+            case ALIGN_SET_TWO:
+                if (!follower.isBusy()) {
+                    // ADD INTAKE LOGIC
+                    robotUtil.baseValues();
+                    follower.followPath(collectSetTwoPos, true);
+                    setPathState(PathState.COLLECT_SET_TWO);
+                }
+                break;
+
+            case COLLECT_SET_TWO:
+                if (!follower.isBusy()) {
+                    // ADD INTAKE LOGIC
+                    robotUtil.baseValues();
+                    follower.followPath(shootSetTwo, true);
+                    setPathState(PathState.SHOOT_SET_TWO);
+                }
+                break;
+
+            case SHOOT_SET_TWO:
+                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1) {
+                    // ADD FLYWHEEL LOGIC
+                    if(pathTimer.getElapsedTimeSeconds() < 2){
+                        robotUtil.limedistance();
+                        robotUtil.getDistance();
+                        robotUtil.shoot();
+                    }
+
+                    if (pathTimer.getElapsedTimeSeconds() < 3.5){
+                        robotUtil.launch();
+                    }
+                    else if (pathTimer.getElapsedTimeSeconds() < 4.5){
+                        robotUtil.block(true);
+                    }
+                    else if (pathTimer.getElapsedTimeSeconds() < 5){
+                        robotUtil.block(false);
+
+                    }
+                    else {
+                        follower.followPath(alignSetThreePos, true);
+                        setPathState(PathState.ALIGN_SET_THREE);
+                    }
+                }
+                break;
+            case ALIGN_SET_THREE:
+                if (!follower.isBusy()) {
+                    // ADD INTAKE LOGIC
+                    robotUtil.baseValues();
+                    follower.followPath(collectSetThreePos, true);
+                    setPathState(PathState.COLLECT_SET_THREE);
+                }
+                break;
+            case COLLECT_SET_THREE:
+                if (!follower.isBusy()) {
+                    // ADD INTAKE LOGIC
+                    robotUtil.baseValues();
+                    follower.followPath(shootSetThree, true);
+                    setPathState(PathState.SHOOT_SET_THREE);
+                }
+                break;
+            case SHOOT_SET_THREE:
+                if (!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 1) {
+                    // ADD FLYWHEEL LOGIC
+                    if(pathTimer.getElapsedTimeSeconds() < 2){
+                        robotUtil.limedistance();
+                        robotUtil.getDistance();
+                        robotUtil.shoot();
+                    }
+
+                    if (pathTimer.getElapsedTimeSeconds() < 3.5){
+                        robotUtil.launch();
+                    }
+                    else if (pathTimer.getElapsedTimeSeconds() < 4.5){
+                        robotUtil.block(true);
+                    }
+                    else if (pathTimer.getElapsedTimeSeconds() < 5){
+                        robotUtil.block(false);
+
+                    }
+                    else {
+                        telemetry.addLine("All States Finished");
+                    }
+                }
+                break;
             default:
                 telemetry.addLine("No State Comanded");
                 break;
@@ -116,10 +294,16 @@ public class BlueAuto extends OpMode{
         pathState = PathState.DRIVE_STARTPOS_SHOOT_POS;
         pathTimer = new Timer();
         opModeTimer = new Timer();
+
+        intake = new intaking();
+        intake.init(hardwareMap);
+
+
+        robotUtil = new RobotUtil(hardwareMap, telemetry);
         follower = Constants.createFollower(hardwareMap);
-        robotUtil=new RobotUtil();
+        robotUtil=new RobotUtil(hardwareMap, telemetry);
         intake=new intaking();
-        robotUtil.maping(hardwareMap);
+        robotUtil.mapingBlue();
         double distance = robotUtil.limedistance();
         // add in other init mechanisms
         intake.init(hardwareMap);

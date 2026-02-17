@@ -64,10 +64,10 @@ public class FrontAuto__Move extends LinearOpMode {
 
     public void processDriveInputs() {
         intake.auto2();
-        backRight.setPower(-forward);
-        backLeft.setPower(-forward);
-        frontRight.setPower(-forward);
-        frontLeft.setPower(-forward);
+        backRight.setPower(forward);
+        backLeft.setPower(forward);
+        frontRight.setPower(forward);
+        frontLeft.setPower(forward);
         sleep(50);
     }
 

@@ -27,4 +27,15 @@ public class transfer {
         }
         toggle=!toggle;
     }
+
+    public void auto(boolean toggle) {
+        if (toggle)
+        {
+            transfer.setVelocity(2100);
+        }
+        else
+        {
+            transfer.setVelocity(0);
+        }
+    }
 }
